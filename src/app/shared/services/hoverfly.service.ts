@@ -19,11 +19,10 @@ export class HoverflyService {
 
   getVersion(): Observable < string > {
     return this.http.get(this.hoverflyApiUrl + "hoverfly/version")
-      .map(res => res.json())
-      .catch(version => {
-        return Observable.of(version)
-      })
+      .map(res => res.json().version)
   }
+
+
 
   getMode(): Observable < any > {
     return Observable.timer(0, this.pollingInterval)
