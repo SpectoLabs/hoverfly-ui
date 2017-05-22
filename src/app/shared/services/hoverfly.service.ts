@@ -7,9 +7,7 @@ import {
 } from '@angular/http';
 import {
   Observable
-} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+} from 'rxjs/Rx';
 
 @Injectable()
 export class HoverflyService {
@@ -24,9 +22,9 @@ export class HoverflyService {
 
 
 
-  getMode(): Observable < any > {
+  getMode(): Observable<any> {
     return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get(this.hoverflyApiUrl + 'hoverfly/mode').map(res => res.json()));
+      .switchMap(() => this.http.get(this.hoverflyApiUrl + 'hoverfly/mode').map(res => res.json().mode)); // using switchMap to complete and flattern the inner observable on the next event
   }
 
   setMode(modeSelection): Observable < any > {
