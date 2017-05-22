@@ -41,4 +41,21 @@ describe('Service: Hoverfly', () => {
 
   });
 
+  it('getMode should return hoverfly mode', fakeAsync(() => {
+
+    let result;
+    service.getMode().take(1).subscribe(mode => result = mode); // take the first event from the series of polling
+    tick();  // only effective when this is wrapped in fakeAsync(). Wait for all reactive events to complete
+
+    lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: { mode: 'capture'},
+      status: 200
+    })));
+    expect(lastConnection).toBeDefined();
+    expect(lastConnection.request.url).toBe('http://localhost:8888/api/v2/hoverfly/mode');
+    expect(result).toBe('capture');
+
+  }));
+
+
 });
