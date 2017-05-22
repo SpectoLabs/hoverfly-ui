@@ -1,0 +1,79 @@
+      <div class="panel panel-default">
+        <div class="panel-heading">Information</div>
+          <table class="table">
+            <tr>
+              <td>Hoverfly version</td>
+              <td>{{version}}</td>
+            </tr>
+            <tr>
+              <td>Current mode</td>
+              <td><span class="label label-info">{{mode}}</span></td>
+            </tr>
+            <tr>
+              <td>Destination filter</td>
+              <td><pre class="pre-scrollable">{{destination}}</pre></td>
+            </tr>
+            <tr>
+              <td>Middleware remote</td>
+              <td><pre> {{middlewareRemote}}</pre></td>
+            </tr>      
+            <tr>
+              <td>Middleware binary</td>
+              <td><pre> {{middlewareBinary}}</pre></td>
+            </tr>
+            <tr>
+              <td>Middleware script</td>
+              <td><pre> {{middlewareScript}}</pre></td>
+            </tr>            
+
+          </table>
+
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Mode selector</div>
+        <div class="panel-body text-center">
+<div class="btn-group">
+  <a (click)="setMode($event)" name="capture" class="btn btn-default">Capture</a>
+  <a (click)="setMode($event)" name="simulate" class="btn btn-default">Simulate</a>
+  <a (click)="setMode($event)" name="modify" class="btn btn-default">Modify</a>
+  <a (click)="setMode($event)" name="synthesize" class="btn btn-default">Synthesize</a>
+</div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Request counters</div>
+        <div class="panel-body">
+          <div class="row text-center">
+            <div class="col-sm-3">
+              <div class="well">
+                <h4>Captured</h4>
+                <h3><span class="label label-default">{{countersCaptured}}</span></h3><br>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="well">
+                <h4>Simulated</h4>
+                <h3><span class="label label-default">{{countersSimulated}}</span></h3><br>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="well">
+                <h4>Modified</h4>
+                <h3><span class="label label-default">{{countersModified}}</span></h3><br>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="well">
+                <h4>Synthesized</h4>
+                <h3><span class="label label-default">{{countersSynthesized}}</span></h3><br>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
