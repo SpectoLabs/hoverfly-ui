@@ -12,6 +12,7 @@ import { DashboardModule } from './views/dashboard/dashboard.module';
 import { TopnavbarModule } from './topnavbar/topnavbar.module';
 
 import { ngModuleSharedProviders } from "./shared/index";
+import { APP_BASE_HREF } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ngModuleSharedProviders } from "./shared/index";
   ],
   providers: [
     ...ngModuleSharedProviders,
+    {provide: APP_BASE_HREF, useValue : '/' }
   ],
   bootstrap: [AppComponent]
 })
