@@ -2,17 +2,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
 
-import { ROUTES } from "./app.routes";
+import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { LoginModule } from './views/login/login.module';
 import { DashboardModule } from './views/dashboard/dashboard.module';
 import { TopnavbarModule } from './topnavbar/topnavbar.module';
 
-import { ngModuleSharedProviders } from "./shared/index";
-import { APP_BASE_HREF } from "@angular/common";
+import { ngModuleSharedProviders } from './shared/index';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [

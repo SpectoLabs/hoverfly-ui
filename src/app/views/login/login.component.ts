@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -12,14 +12,14 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class LoginComponent {
 
-  public username: string
-  public password: string
+  public username: string;
+  public password: string;
   router: Router;
 
   login() {
-    console.log("logging in " + this.username + ":" + this.password)
+    console.log('logging in ' + this.username + ':' + this.password);
     // this.router.navigate(['/dashboard']);
-     window.location.href = "dashboard";
+     window.location.href = 'dashboard';
   }
 
 }

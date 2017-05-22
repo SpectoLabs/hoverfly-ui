@@ -1,9 +1,9 @@
 
-import { Injector, ReflectiveInjector } from "@angular/core";
-import { MockBackend, MockConnection } from "@angular/http/testing";
-import { BaseRequestOptions, ConnectionBackend, Http, ResponseOptions, Response, RequestOptions } from "@angular/http";
-import { HoverflyService } from "./hoverfly.service";
-import { fakeAsync, tick } from "@angular/core/testing";
+import { Injector, ReflectiveInjector } from '@angular/core';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BaseRequestOptions, ConnectionBackend, Http, ResponseOptions, Response, RequestOptions } from '@angular/http';
+import { HoverflyService } from './hoverfly.service';
+import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('Service: Hoverfly', () => {
 
@@ -31,13 +31,13 @@ describe('Service: Hoverfly', () => {
     let result;
     service.getVersion().subscribe(version => result = version);
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { version: "v0.11.4"},
+      body: { version: 'v0.11.4'},
       status: 200
     })));
 
     expect(lastConnection).toBeDefined();
-    expect(lastConnection.request.url).toBe("http://localhost:8888/api/v2/hoverfly/version");
-    expect(result).toBe("v0.11.4");
+    expect(lastConnection.request.url).toBe('http://localhost:8888/api/v2/hoverfly/version');
+    expect(result).toBe('v0.11.4');
 
   });
 
