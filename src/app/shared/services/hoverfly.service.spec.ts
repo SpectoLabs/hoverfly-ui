@@ -57,5 +57,34 @@ describe('Service: Hoverfly', () => {
 
   }));
 
+  it('isAuthenticated should return true if response status is 200', () => {
+
+    let result;
+    service.isAuthenticated().subscribe(authenticated => result = authenticated);
+
+    lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: { version: 'v0.11.4'},
+      status: 200
+    })));
+
+    expect(lastConnection).toBeDefined();
+    expect(lastConnection.request.url).toBe('http://localhost:8888/api/v2/hoverfly/version');
+    expect(result).toBeTruthy();
+  });
+
+  it('isAuthenticated should return false if response status is not 200', () => {
+
+    let result;
+    service.isAuthenticated().subscribe(authenticated => result = authenticated);
+
+    lastConnection.mockRespond(new Response(new ResponseOptions({
+      status: 500
+    })));
+
+    expect(lastConnection).toBeDefined();
+    expect(lastConnection.request.url).toBe('http://localhost:8888/api/v2/hoverfly/version');
+    expect(result).toBeFalsy();
+  });
+
 
 });
