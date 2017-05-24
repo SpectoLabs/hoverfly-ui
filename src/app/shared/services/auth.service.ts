@@ -1,6 +1,4 @@
-
-
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 import { Http, Response } from "@angular/http";
@@ -8,6 +6,9 @@ import { Http, Response } from "@angular/http";
 export class AuthService {
 
   private authenticatedUserUrl;
+
+  @Output()
+  onLogin: EventEmitter<any> = new EventEmitter();
 
   constructor(private router: Router, private http: Http) {
   }
@@ -26,13 +27,14 @@ export class AuthService {
     })
       .map((res: Response) => res.json().token)
       .subscribe(token => {
+        this.onLogin.emit(true);
         sessionStorage.setItem('api-token', token);
         this.router.navigate([ '/dashboard' ]);
       }, err => console.log(err));
   }
 
   logout() {
-
+    sessionStorage.removeItem('api-key')
     this.router.navigate([ '/login' ])
   }
 }

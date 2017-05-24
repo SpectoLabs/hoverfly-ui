@@ -28,11 +28,7 @@ export class DashboardComponent {
 
   constructor(hoverflyService: HoverflyService) {
     this.hoverfly = hoverflyService;
-    this.getVersion();
-
-  }
-
-  getVersion() {
+    
     this.hoverfly.getVersion().subscribe(
       res => this.version = res
     );
