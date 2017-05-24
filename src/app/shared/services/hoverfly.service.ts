@@ -45,4 +45,13 @@ export class HoverflyService {
     return Observable.timer(0, this.pollingInterval)
       .switchMap(() => this.http.get(this.hoverflyApiUrl + 'hoverfly').map(res => res.json()));
   }
+
+  isAuthenticated(): Observable<boolean> {
+    return this.http.get(this.hoverflyApiUrl + 'hoverfly/version')
+      .map((res: Response) => res.status === 200)
+      .catch(err => {
+        console.log(err)
+        return Observable.of(false);
+      });
+  }
 }
