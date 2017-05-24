@@ -34,22 +34,22 @@ export class DashboardComponent {
 
   getVersion() {
     this.hoverfly.getVersion().subscribe(
-      res => this.version = res['version']
+      res => this.version = res
     );
     this.hoverfly.getMode().subscribe(
-      res => this.mode = res['mode']
+      res => this.mode = res
     );
     this.hoverfly.getDestination().subscribe(
-      res => this.destination = res['destination']
+      res => this.destination = res
     );
     this.hoverfly.getMiddleware().subscribe(
       res => {
-        this.middlewareRemote = res['remote'];
-        this.middlewareBinary = res['binary'];
-        this.middlewareScript = res['script'];
+        this.middlewareRemote = res.remote;
+        this.middlewareBinary = res.binary;
+        this.middlewareScript = res.script;
       });
 
-    this.hoverfly.getStats().subscribe(
+    this.hoverfly.getUsageCounters().subscribe(
       res => {
         this.countersCaptured = res['usage']['counters']['capture'];
         this.countersSimulated = res['usage']['counters']['simulate'];
@@ -61,7 +61,7 @@ export class DashboardComponent {
 
   setMode(event) {
     this.hoverfly.setMode(event.srcElement.name).subscribe(
-        res => this.mode = res['mode']
+        res => this.mode = res
     );
   }
 }
