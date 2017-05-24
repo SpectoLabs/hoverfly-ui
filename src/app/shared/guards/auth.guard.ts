@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { HoverflyService } from "../services/hoverfly.service";
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private service: HoverflyService, private router: Router) {
+  constructor(private service: AuthService) {
   }
 
   canActivate() : Observable<boolean>{
-    return this.service.isAuthenticated().map(result => {
+    return this.service.checkAuthenticated().map(result => {
       if (result === false) {
-        this.router.navigate(['/login'])
+        this.service.logout();
       }
 
       return result
