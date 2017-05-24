@@ -6,7 +6,7 @@
         [(ngModel)]="username" name="username" #inputUsername="ngModel" required placeholder="Username">
            
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" class="form-control" 
+    <input id="inputPassword" type="password" class="form-control"
         [(ngModel)]="password" name="password" #inputPassword="ngModel" required placeholder="Password">
         
     <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>

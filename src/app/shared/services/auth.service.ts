@@ -16,10 +16,19 @@ export class AuthService {
 
     return this.http.get('/api/v2/hoverfly/version')
       .map((res: Response) => res.status === 200)
-      .catch(err => {
-        console.log(err)
-        return Observable.of(false);
-      });
+      .catch(err => Observable.of(false));
+  }
+
+  login(username, password) {
+    this.http.post('/api/token-auth', {
+      username: username,
+      password: password
+    })
+      .map((res: Response) => res.json().token)
+      .subscribe(token => {
+        sessionStorage.setItem('api-token', token);
+        this.router.navigate([ '/dashboard' ]);
+      }, err => console.log(err));
   }
 
   logout() {

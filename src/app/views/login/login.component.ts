@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from "../../shared/services/auth.service";
 
 
 @Component({
@@ -16,10 +17,12 @@ export class LoginComponent {
   public password: string;
   router: Router;
 
+  constructor(private authService: AuthService) {
+
+  }
+
   login() {
-    console.log('logging in ' + this.username + ':' + this.password);
-    // this.router.navigate(['/dashboard']);
-     window.location.href = 'dashboard';
+    this.authService.login(this.username, this.password);
   }
 
 }
