@@ -15,24 +15,21 @@ export class HoverflyService {
   constructor(private http: Http) {}
 
   getVersion(): Observable < string > {
-    return this.http.get('/api/v2/hoverfly/version')
-      .map(res => res.json().version);
+    return this.http.get('/api/v2/hoverfly/version').map(res => res.json().version);
   }
 
-
-
-  getMode(): Observable<any> {
+  getMode(): Observable < string > {
     return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get('/api/v2/hoverfly/mode').map(res => res.json().mode)); // using switchMap to complete and flattern the inner observable on the next event
+      .switchMap(() => this.http.get('/api/v2/hoverfly/mode').map(res => res.json().mode));
   }
 
-  setMode(modeSelection): Observable < any > {
-    return this.http.put('/api/v2/hoverfly/mode', JSON.stringify({mode: modeSelection})).map(res => res.json());
+  setMode(modeSelection): Observable < string > {
+    return this.http.put('/api/v2/hoverfly/mode', JSON.stringify({mode: modeSelection})).map(res => res.json().mode);
   }
 
-  getDestination(): Observable < any > {
+  getDestination(): Observable < string > {
     return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get('/api/v2/hoverfly/destination').map(res => res.json()));
+      .switchMap(() => this.http.get('/api/v2/hoverfly/destination').map(res => res.json().destination));
   }
 
   getMiddleware(): Observable < any > {
@@ -40,9 +37,9 @@ export class HoverflyService {
       .switchMap(() => this.http.get('/api/v2/hoverfly/middleware').map(res => res.json()));
   }
 
-  getStats(): Observable < any > {
+  getUsageCounters(): Observable < any > {
     return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get('/api/v2/hoverfly').map(res => res.json()));
+      .switchMap(() => this.http.get('/api/v2/hoverfly/usage').map(res => res.json().usage.counters));
   }
 
 }
