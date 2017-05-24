@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { ROUTES } from './app.routes';
@@ -13,6 +13,7 @@ import { TopnavbarModule } from './topnavbar/topnavbar.module';
 
 import { ngModuleSharedProviders } from './shared/index';
 import { APP_BASE_HREF } from '@angular/common';
+import { CustomRequestOptions } from "app/shared/http/custom-request-options";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,11 @@ import { APP_BASE_HREF } from '@angular/common';
   ],
   providers: [
     ...ngModuleSharedProviders,
-    {provide: APP_BASE_HREF, useValue : '/' }
+    {provide: APP_BASE_HREF, useValue : '/' },
+    {
+      provide: RequestOptions,
+      useClass: CustomRequestOptions
+    },
   ],
   bootstrap: [AppComponent]
 })

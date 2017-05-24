@@ -1,40 +1,34 @@
 
 
 import { Injector, ReflectiveInjector } from "@angular/core";
-import { HoverflyService } from "../services/hoverfly.service";
 import createSpy = jasmine.createSpy;
 import { AuthGuard } from "./auth.guard";
 import { Observable } from "rxjs/Observable";
-import { extraEntryParser } from "@angular/cli/models/webpack-configs/utils";
-import { Router } from "@angular/router";
-import { fakeAsync, tick } from "@angular/core/testing";
+import { AuthService } from "../services/auth.service";
 
-class MockHoverflyService {
+class MockAuthService {
 
-  isAuthenticated = createSpy('isAuthenticated');
+  checkAuthenticated = createSpy('checkAuthenticated');
+  logout = createSpy('logout');
 }
 
-class MockRouter {
-  navigate = createSpy('navigate');
-}
+
 
 describe('Auth Guard', () => {
 
   let injector: Injector;
-  let service: MockHoverflyService;
+  let service: MockAuthService;
   let authGuard: AuthGuard;
-  let router: MockRouter;
 
 
   beforeEach(() => {
     injector = ReflectiveInjector.resolveAndCreate([
-      { provide: HoverflyService, useClass: MockHoverflyService },
-      { provide: Router, useClass: MockRouter },
+      { provide: AuthService, useClass: MockAuthService },
+
       AuthGuard
     ]);
 
-    service = injector.get(HoverflyService);
-    router = injector.get(Router);
+    service = injector.get(AuthService);
     authGuard = injector.get(AuthGuard);
 
   });
@@ -42,7 +36,7 @@ describe('Auth Guard', () => {
   it('should return false if is not authenticated', () => {
 
     let result;
-    service.isAuthenticated.and.returnValue(Observable.of(false));
+    service.checkAuthenticated.and.returnValue(Observable.of(false));
 
     authGuard.canActivate().subscribe(activated => result = activated);
 
@@ -52,7 +46,7 @@ describe('Auth Guard', () => {
   it('should return true if is authenticated', () => {
 
     let result;
-    service.isAuthenticated.and.returnValue(Observable.of(true));
+    service.checkAuthenticated.and.returnValue(Observable.of(true));
 
     authGuard.canActivate().subscribe(activated => result = activated);
 
@@ -61,10 +55,11 @@ describe('Auth Guard', () => {
 
   it('should logout if is not authenticated', () => {
 
-    service.isAuthenticated.and.returnValue(Observable.of(false));
+    service.checkAuthenticated.and.returnValue(Observable.of(false));
     authGuard.canActivate().subscribe();
 
-    expect(router.navigate).toHaveBeenCalledWith([ '/login' ]);
+    expect(service.logout).toHaveBeenCalled();
   });
+
 
 });
