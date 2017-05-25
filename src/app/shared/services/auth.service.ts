@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   logout() {
-    sessionStorage.removeItem('api-key')
+    sessionStorage.removeItem('api-token');
     this.router.navigate([ '/login' ])
   }
 }
