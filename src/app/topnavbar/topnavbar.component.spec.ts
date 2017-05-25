@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { TopnavbarComponent } from './topnavbar.component';
+import { TopnavbarModule } from "./topnavbar.module";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe('TopnavbarComponent', () => {
   let component: TopnavbarComponent;
@@ -11,7 +13,10 @@ describe('TopnavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopnavbarComponent ]
+      imports: [
+        TopnavbarModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

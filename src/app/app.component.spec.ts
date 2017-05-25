@@ -1,22 +1,31 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
 
+
 describe('AppComponent', () => {
-  beforeEach(() => {
+
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         AppModule
       ]
-    });
-    TestBed.compileComponents();
+    }).compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+  it('should create the app', () => {
+    expect(component).toBeTruthy();
+  });
+
 });
+

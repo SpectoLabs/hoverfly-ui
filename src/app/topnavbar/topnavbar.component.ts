@@ -25,7 +25,7 @@ export class TopnavbarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout()
+    this.authService.logout();
     this.showLogoutLink = false
   }
 
