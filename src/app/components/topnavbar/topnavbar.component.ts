@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HoverflyService } from '../shared/services/hoverfly.service';
-import { AuthService } from '../shared/services/auth.service';
+import { HoverflyService } from '../../shared/services/hoverfly.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'topnavbar',

@@ -28,7 +28,7 @@ describe('Auth Guard', () => {
       AuthGuard
     ]);
 
-    service = injector.get(AuthService);
+    service = <any> injector.get(AuthService);
     authGuard = injector.get(AuthGuard);
 
   });

@@ -27,7 +27,7 @@ describe('Service: Auth', () => {
     ]);
 
     service = injector.get(AuthService);
-    router = injector.get(Router);
+    router = <any> injector.get(Router);
     backend = injector.get(ConnectionBackend) as MockBackend;
     backend.connections.subscribe(connection => lastConnection = connection);
 
