@@ -9,6 +9,11 @@ import {
   Observable
 } from 'rxjs/Rx';
 
+export const HOVERFLY_ACTIONS = {
+
+  UPDATE: 'UPDATE'
+};
+
 @Injectable()
 export class HoverflyService {
   private pollingInterval = 5000;
