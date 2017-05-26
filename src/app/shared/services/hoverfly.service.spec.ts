@@ -52,80 +52,90 @@ describe('Service: Hoverfly', () => {
 
   });
 
-  it('getMode should return hoverfly mode', fakeAsync(() => {
+  it('getMode should dispatch an update action', fakeAsync(() => {
 
     let result;
-    service.getMode().take(1).subscribe(mode => result = mode); // take the first event from the series of polling
-    tick();  // only effective when this is wrapped in fakeAsync(). Wait for all reactive events to complete
-
+    service.getMode();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { mode: 'capture'},
       status: 200
     })));
+
     expect(lastConnection).toBeDefined();
     expect(lastConnection.request.url).toBe('/api/v2/hoverfly/mode');
     expect(lastConnection.request.method).toBe(RequestMethod.Get);
 
-    expect(result).toBe('capture');
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.UPDATE,
+      payload: { mode: 'capture' }
+    });
 
   }));
 
   it('setMode should send hoverfly mode', fakeAsync(() => {
 
     let result;
-    service.setMode('capture').take(1).subscribe(mode => result = mode); // take the first event from the series of polling
-    tick();  // only effective when this is wrapped in fakeAsync(). Wait for all reactive events to complete
-
+    service.setMode("capture");
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { mode: 'capture'},
       status: 200
     })));
+
     expect(lastConnection).toBeDefined();
     expect(lastConnection.request.url).toBe('/api/v2/hoverfly/mode');
     expect(lastConnection.request.method).toBe(RequestMethod.Put);
     expect(lastConnection.request.getBody()).toBe('{"mode":"capture"}');
 
-    expect(result).toBe('capture');
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.UPDATE,
+      payload: { mode: 'capture' }
+    });
 
   }));
 
-  it('getDestination should return hoverfly destination', fakeAsync(() => {
+  it('getDestination should dispatch an update action', fakeAsync(() => {
 
     let result;
-    service.getDestination().take(1).subscribe(mode => result = mode); // take the first event from the series of polling
-    tick();  // only effective when this is wrapped in fakeAsync(). Wait for all reactive events to complete
-
+    service.getDestination();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { destination: 'destination.com'},
       status: 200
     })));
+
     expect(lastConnection).toBeDefined();
     expect(lastConnection.request.url).toBe('/api/v2/hoverfly/destination');
     expect(lastConnection.request.method).toBe(RequestMethod.Get);
 
-    expect(result).toBe('destination.com');
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.UPDATE,
+      payload: { destination: 'destination.com' }
+    });
 
   }));
 
-  it('getMiddleware should return hoverfly middleware', fakeAsync(() => {
+  it('getMiddleware should dispatch an update action', fakeAsync(() => {
 
     let result;
-    service.getMiddleware().take(1).subscribe(mode => result = mode); // take the first event from the series of polling
-    tick();  // only effective when this is wrapped in fakeAsync(). Wait for all reactive events to complete
-
+    service.getMiddleware();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { 
-          remote: 'one',
-          binary: 'two'
+       remote: 'one',
+       binary: 'two'
       },
       status: 200
     })));
+
     expect(lastConnection).toBeDefined();
     expect(lastConnection.request.url).toBe('/api/v2/hoverfly/middleware');
     expect(lastConnection.request.method).toBe(RequestMethod.Get);
 
-    expect(result.remote).toBe('one');
-    expect(result.binary).toBe('two');
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.UPDATE,
+      payload: { 
+        remote: 'one',
+        binary: 'two'
+       }
+    });
 
   }));
 

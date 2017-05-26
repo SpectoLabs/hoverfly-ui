@@ -1,13 +1,14 @@
 
 
-import { Middleware } from "./middleware.model";
 import { Usage } from "./usage.model";
 export interface Hoverfly {
 
   version: string;
   mode: string;
   destination: string;
-  middleware: Middleware;
+  remote: string;
+  binary: string;
+  script: string;
   usage: Usage;
 }
 
@@ -15,7 +16,9 @@ export class NullHoverfly implements Hoverfly {
   version = '';
   mode = '';
   destination = '';
-  middleware = {} as Middleware;
+  remote = '';
+  binary = '';
+  script = '';
   usage = {} as Usage;
 
 }
