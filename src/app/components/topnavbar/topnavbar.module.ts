@@ -11,7 +11,6 @@ import { AuthService } from "../../shared/services/auth.service";
   imports: [ BrowserModule, RouterModule, HttpModule],
   exports: [ TopnavbarComponent ],
   providers: [
-    HoverflyService,
     AuthService
   ]
 })
