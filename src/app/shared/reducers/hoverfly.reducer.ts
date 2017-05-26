@@ -7,13 +7,12 @@ export interface HoverflyState {
 }
 
 const INITIAL_STATE: Map<any, any> = fromJS({
-  hoverfly: new NullHoverfly()
+  hoverfly: {}
 });
 
 export const hoverflyReducer = createReducer(INITIAL_STATE, {
 
   [HOVERFLY_ACTIONS.UPDATE]: (state: Map<any, any>, action) =>
-    state.merge({
-      hoverfly: [ ...state.get('hoverfly'), ...fromJS(action.payload) ]
-    })
+
+    state.update('hoverfly', (hoverfly: Map<any, any>) => hoverfly.merge(fromJS(action.payload)))
 });

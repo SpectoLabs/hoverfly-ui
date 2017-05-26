@@ -8,6 +8,8 @@ import {
 import {
   Observable
 } from 'rxjs/Rx';
+import { NgRedux } from "@angular-redux/store";
+import { AppState } from "../../app.state";
 
 export const HOVERFLY_ACTIONS = {
 
@@ -17,10 +19,15 @@ export const HOVERFLY_ACTIONS = {
 @Injectable()
 export class HoverflyService {
   private pollingInterval = 5000;
-  constructor(private http: Http) {}
+  constructor(private http: Http, private ngRedux: NgRedux<AppState>,) {}
 
-  getVersion(): Observable < string > {
-    return this.http.get('/api/v2/hoverfly/version').map(res => res.json().version);
+  getVersion() {
+    this.http.get('/api/v2/hoverfly/version')
+      .map(res => res.json())
+      .subscribe(data => this.ngRedux.dispatch({
+        type: HOVERFLY_ACTIONS.UPDATE,
+        payload: data
+      }));
   }
 
   getMode(): Observable < string > {

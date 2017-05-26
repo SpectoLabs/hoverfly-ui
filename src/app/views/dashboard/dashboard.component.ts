@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HoverflyService } from '../../shared/services/hoverfly.service';
+import { Hoverfly } from "../../shared/models/hoverfly.model";
+import { select } from "@angular-redux/store";
+import { fromJS, Map } from "immutable";
 
 
 @Component({
@@ -11,9 +14,13 @@ import { HoverflyService } from '../../shared/services/hoverfly.service';
     'dashboard.component.css'
   ]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  public version: string;
+  @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
+
+
+  private hoverfly: Hoverfly;
+
   public mode: string;
   public destination: string;
   public middlewareRemote: string;
@@ -24,28 +31,33 @@ export class DashboardComponent {
   public countersModified: number;
   public countersSynthesized: number;
 
-  private hoverfly: HoverflyService;
+  ngOnInit(): void {
+    this.hoverfly$.subscribe((hoverfly: Map<any, any>) => {
+      this.hoverfly = hoverfly.toJS();
+      console.log(hoverfly);
+    });
 
-  constructor(hoverflyService: HoverflyService) {
-    this.hoverfly = hoverflyService;
-    
-    this.hoverfly.getVersion().subscribe(
-      res => this.version = res
-    );
-    this.hoverfly.getMode().subscribe(
+    console.log('get version')
+    this.service.getVersion();
+  }
+
+
+  constructor(private service: HoverflyService) {
+
+    this.service.getMode().subscribe(
       res => this.mode = res
     );
-    this.hoverfly.getDestination().subscribe(
+    this.service.getDestination().subscribe(
       res => this.destination = res
     );
-    this.hoverfly.getMiddleware().subscribe(
+    this.service.getMiddleware().subscribe(
       res => {
         this.middlewareRemote = res.remote;
         this.middlewareBinary = res.binary;
         this.middlewareScript = res.script;
       });
 
-    this.hoverfly.getUsageCounters().subscribe(
+    this.service.getUsageCounters().subscribe(
       res => {
         this.countersCaptured = res['capture'];
         this.countersSimulated = res['simulate'];
@@ -56,7 +68,7 @@ export class DashboardComponent {
   }
 
   setMode(event) {
-    this.hoverfly.setMode(event.srcElement.name).subscribe(
+    this.service.setMode(event.srcElement.name).subscribe(
         res => this.mode = res
     );
   }

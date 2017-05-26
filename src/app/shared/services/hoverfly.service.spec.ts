@@ -2,8 +2,10 @@
 import { Injector, ReflectiveInjector } from '@angular/core';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, ConnectionBackend, Http, ResponseOptions, Response, RequestOptions, RequestMethod } from '@angular/http';
-import { HoverflyService } from './hoverfly.service';
+import { HOVERFLY_ACTIONS, HoverflyService } from './hoverfly.service';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { NgRedux } from "@angular-redux/store";
+import { AppState } from "../../app.state";
 
 describe('Service: Hoverfly', () => {
 
@@ -11,9 +13,13 @@ describe('Service: Hoverfly', () => {
   let backend: MockBackend;
   let lastConnection: MockConnection;
   let service: HoverflyService;
+  let ngRedux: NgRedux<AppState>;
 
   beforeEach(() => {
+    ngRedux = new NgRedux<AppState>(null);
+    spyOn(ngRedux, 'dispatch');
     injector = ReflectiveInjector.resolveAndCreate([
+      { provide: NgRedux, useValue: ngRedux },
       { provide: ConnectionBackend, useClass: MockBackend },
       { provide: RequestOptions, useClass: BaseRequestOptions },
       Http,
@@ -26,10 +32,10 @@ describe('Service: Hoverfly', () => {
 
   });
 
-  it('getVersion should return hoverfly version', () => {
+  it('getVersion should dispatch an update action', () => {
 
     let result;
-    service.getVersion().subscribe(version => result = version);
+    service.getVersion();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { version: 'v0.11.4'},
       status: 200
@@ -39,7 +45,10 @@ describe('Service: Hoverfly', () => {
     expect(lastConnection.request.url).toBe('/api/v2/hoverfly/version');
     expect(lastConnection.request.method).toBe(RequestMethod.Get);
 
-    expect(result).toBe('v0.11.4');
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.UPDATE,
+      payload: {version: 'v0.11.4'}
+    });
 
   });
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HoverflyService } from '../../shared/services/hoverfly.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { select } from "@angular-redux/store";
+import { Observable } from "rxjs/Observable";
+import { fromJS, Map } from "immutable";
 
 @Component({
   selector: 'topnavbar',
@@ -9,13 +11,16 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class TopnavbarComponent implements OnInit {
 
-  public docsLink: string;
-  public showLogoutLink: boolean
+  @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
 
-  constructor(private hoverflyService: HoverflyService, private authService: AuthService) {
-    this.hoverflyService.getVersion().subscribe(
-      res => this.docsLink = "https://hoverfly.readthedocs.io/en/" + res + "/"
-    );
+  private version = 'latest';
+  public showLogoutLink: boolean;
+
+  constructor(private authService: AuthService) {
+    this.hoverfly$
+      .map((hoverfly: Map<any, any>) => hoverfly.toJS().version)
+      .filter(version => version)
+      .subscribe(version =>  this.version = version);
   }
 
   ngOnInit() {
