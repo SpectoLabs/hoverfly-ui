@@ -30,23 +30,40 @@ export class HoverflyService {
       }));
   }
 
-  getMode(): Observable < string > {
-    return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get('/api/v2/hoverfly/mode').map(res => res.json().mode));
+  getMode() {
+    this.http.get('/api/v2/hoverfly/mode')
+      .map(res => res.json())
+      .subscribe(data => this.ngRedux.dispatch({
+        type: HOVERFLY_ACTIONS.UPDATE,
+        payload: data
+      }));
   }
 
-  setMode(modeSelection): Observable < string > {
-    return this.http.put('/api/v2/hoverfly/mode', JSON.stringify({mode: modeSelection})).map(res => res.json().mode);
+  setMode(modeSelection) {
+    this.http.put('/api/v2/hoverfly/mode', JSON.stringify({mode: modeSelection}))
+      .map(res => res.json())
+      .subscribe(data => this.ngRedux.dispatch({
+        type: HOVERFLY_ACTIONS.UPDATE,
+        payload: data
+      }));
   }
 
-  getDestination(): Observable < string > {
-    return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get('/api/v2/hoverfly/destination').map(res => res.json().destination));
+  getDestination() {
+    this.http.get('/api/v2/hoverfly/destination')
+      .map(res => res.json())
+      .subscribe(data => this.ngRedux.dispatch({
+        type: HOVERFLY_ACTIONS.UPDATE,
+        payload: data
+      }));
   }
 
-  getMiddleware(): Observable < any > {
-    return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get('/api/v2/hoverfly/middleware').map(res => res.json()));
+  getMiddleware() {
+    this.http.get('/api/v2/hoverfly/middleware')
+      .map(res => res.json())
+      .subscribe(data => this.ngRedux.dispatch({
+        type: HOVERFLY_ACTIONS.UPDATE,
+        payload: data
+      }));
   }
 
   getUsageCounters(): Observable < any > {

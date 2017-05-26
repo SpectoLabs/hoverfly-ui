@@ -39,23 +39,16 @@ export class DashboardComponent implements OnInit {
 
     console.log('get version')
     this.service.getVersion();
+    Observable.timer(0, 5000)
+      .subscribe(() => {
+        this.service.getMode()
+        this.service.getDestination()
+        this.service.getMiddleware()
+      })
   }
 
 
   constructor(private service: HoverflyService) {
-
-    this.service.getMode().subscribe(
-      res => this.mode = res
-    );
-    this.service.getDestination().subscribe(
-      res => this.destination = res
-    );
-    this.service.getMiddleware().subscribe(
-      res => {
-        this.middlewareRemote = res.remote;
-        this.middlewareBinary = res.binary;
-        this.middlewareScript = res.script;
-      });
 
     this.service.getUsageCounters().subscribe(
       res => {
@@ -68,8 +61,6 @@ export class DashboardComponent implements OnInit {
   }
 
   setMode(event) {
-    this.service.setMode(event.srcElement.name).subscribe(
-        res => this.mode = res
-    );
+    this.service.setMode(event.srcElement.name)
   }
 }
