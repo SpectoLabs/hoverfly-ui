@@ -1,0 +1,12 @@
+machine:
+  services:
+    - docker
+  environment:
+#  Suppress cli progress logging
+    TERM: dumb
+  node:
+    version: 6.9.0
+
+test:
+  override:
+    - "make test"
