@@ -47,10 +47,10 @@ export class DashboardComponent {
 
     this.hoverfly.getUsageCounters().subscribe(
       res => {
-        this.countersCaptured = res['usage']['counters']['capture'];
-        this.countersSimulated = res['usage']['counters']['simulate'];
-        this.countersModified = res['usage']['counters']['modify'];
-        this.countersSynthesized = res['usage']['counters']['synthesize'];
+        this.countersCaptured = res['capture'];
+        this.countersSimulated = res['simulate'];
+        this.countersModified = res['modify'];
+        this.countersSynthesized = res['synthesize'];
       }
     );
   }
