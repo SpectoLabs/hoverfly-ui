@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HoverflyService } from '../../shared/services/hoverfly.service';
 import { Hoverfly } from "../../shared/models/hoverfly.model";
 import { select } from "@angular-redux/store";
 import { fromJS, Map } from "immutable";
+import { Subscription } from "rxjs/Subscription";
 
 
 @Component({
@@ -14,19 +14,17 @@ import { fromJS, Map } from "immutable";
     'dashboard.component.css'
   ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+
 
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
 
 
   private hoverfly: Hoverfly;
+  private pollingSubscription: Subscription;
 
-  public mode: string;
-  public destination: string;
-  public middlewareRemote: string;
-  public middlewareBinary: string;
-  public middlewareScript: string;
   public countersCaptured: number;
+
   public countersSimulated: number;
   public countersModified: number;
   public countersSynthesized: number;
@@ -34,30 +32,27 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.hoverfly$.subscribe((hoverfly: Map<any, any>) => {
       this.hoverfly = hoverfly.toJS();
-      console.log(hoverfly);
     });
 
-    console.log('get version')
     this.service.getVersion();
-    Observable.timer(0, 5000)
-      .subscribe(() => {
-        this.service.getMode()
-        this.service.getDestination()
-        this.service.getMiddleware()
-      })
+    this.pollingSubscription = this.service.pollHoverfly();
+  }
+
+  ngOnDestroy(): void {
+    this.pollingSubscription.unsubscribe();
   }
 
 
   constructor(private service: HoverflyService) {
 
-    this.service.getUsageCounters().subscribe(
-      res => {
-        this.countersCaptured = res['capture'];
-        this.countersSimulated = res['simulate'];
-        this.countersModified = res['modify'];
-        this.countersSynthesized = res['synthesize'];
-      }
-    );
+    // this.service.getUsage().subscribe(
+    //   res => {
+    //     this.countersCaptured = res['capture'];
+    //     this.countersSimulated = res['simulate'];
+    //     this.countersModified = res['modify'];
+    //     this.countersSynthesized = res['synthesize'];
+    //   }
+    // );
   }
 
   setMode(event) {
