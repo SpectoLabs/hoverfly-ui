@@ -10,6 +10,7 @@ import {
 } from 'rxjs/Rx';
 import { NgRedux } from "@angular-redux/store";
 import { AppState } from "../../app.state";
+import { Subscription } from "rxjs/Subscription";
 
 export const HOVERFLY_ACTIONS = {
 
@@ -66,9 +67,21 @@ export class HoverflyService {
       }));
   }
 
-  getUsageCounters(): Observable < any > {
+  getUsage(): Observable<any> {
     return Observable.timer(0, this.pollingInterval)
       .switchMap(() => this.http.get('/api/v2/hoverfly/usage').map(res => res.json().usage.counters));
+  }
+
+
+  pollHoverfly(): Subscription {
+
+    return Observable.timer(0, 5000)
+      .subscribe(() => {
+        this.getMode();
+        this.getDestination();
+        this.getMiddleware();
+      });
+
   }
 
 }

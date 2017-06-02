@@ -9,20 +9,17 @@
           <table class="table">
             <tr>
               <td class="col-sm-3">Mode</td>
-              <td class="col-sm-9"><span class="label label-info">{{mode}}</span></td>
+              <td class="col-sm-9"><span class="label label-info">{{ hoverfly.mode }}</span></td>
             </tr>
             <tr>
               <td class="col-sm-3">Destination</td>
               <td class="col-sm-9">
-                  <code>*.hoverfly.io</code>   
+                  <code>{{ hoverfly.destination }}</code>
               </td>
-              <!--
-              <td class="col-sm-7"><code>{{destination}}</code></td>
-              -->
             </tr>
             <tr>
               <td class="col-sm-3">Version</td>
-              <td class="col-sm-9">{{version}}</td>
+              <td class="col-sm-9">{{ hoverfly.version }}</td>
             </tr>
           </table>
         </div>
@@ -61,12 +58,6 @@
               <td><span class="label label-default">201,776,003</span></td>
               <td><span class="label label-default">254,909,111,233</span></td>
               <td><span class="label label-default">6</span></td>
-              <!--
-              <td>{{countersCaptured}}</td>
-              <td>{{countersSimulated}}</td>
-              <td>{{countersModified}}</td>
-              <td>{{countersSynthesized}}</td>
-              -->
             </tr>
         </table>
       </div>

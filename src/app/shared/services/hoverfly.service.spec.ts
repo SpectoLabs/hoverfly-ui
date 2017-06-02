@@ -139,10 +139,10 @@ describe('Service: Hoverfly', () => {
 
   }));
 
-    it('getUsageCounters should return hoverfly stats', fakeAsync(() => {
+    it('getUsage should return hoverfly stats', fakeAsync(() => {
 
     let result;
-    service.getUsageCounters().take(1).subscribe(mode => result = mode); // take the first event from the series of polling
+    service.getUsage().take(1).subscribe(mode => result = mode); // take the first event from the series of polling
     tick();  // only effective when this is wrapped in fakeAsync(). Wait for all reactive events to complete
 
     lastConnection.mockRespond(new Response(new ResponseOptions({
