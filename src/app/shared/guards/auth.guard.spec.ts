@@ -1,10 +1,10 @@
 
 
-import { Injector, ReflectiveInjector } from "@angular/core";
+import { Injector, ReflectiveInjector } from '@angular/core';
 import createSpy = jasmine.createSpy;
-import { AuthGuard } from "./auth.guard";
-import { Observable } from "rxjs/Observable";
-import { AuthService } from "../services/auth.service";
+import { AuthGuard } from './auth.guard';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../services/auth.service';
 
 class MockAuthService {
 

@@ -1,13 +1,13 @@
 
 
-import { DashboardComponent } from "./dashboard.component";
-import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from "@angular/core/testing";
-import { DashboardModule } from "./dashboard.module";
+import { DashboardComponent } from './dashboard.component';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { DashboardModule } from './dashboard.module';
 import createSpy = jasmine.createSpy;
-import { HoverflyService } from "../../shared/services/hoverfly.service";
-import { NgRedux } from "@angular-redux/store";
-import { createMockRedux } from "../../shared/testing/redux-helper";
-import { fromJS } from "immutable";
+import { HoverflyService } from '../../shared/services/hoverfly.service';
+import { NgRedux } from '@angular-redux/store';
+import { createMockRedux } from '../../shared/testing/redux-helper';
+import { fromJS } from 'immutable';
 
 
 const mockState: Map<any, any> = fromJS(

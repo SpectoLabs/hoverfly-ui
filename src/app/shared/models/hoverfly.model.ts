@@ -1,6 +1,6 @@
 
 
-import { Usage } from "./usage.model";
+import { Usage } from './usage.model';
 export interface Hoverfly {
 
   version: string;

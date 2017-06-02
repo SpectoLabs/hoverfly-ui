@@ -13,9 +13,9 @@ import { TopnavbarModule } from './components/topnavbar/topnavbar.module';
 
 import { ngModuleSharedProviders } from './shared/index';
 import { APP_BASE_HREF } from '@angular/common';
-import { CustomRequestOptions } from "app/shared/http/custom-request-options";
-import { DevToolsExtension, NgRedux, NgReduxModule } from "@angular-redux/store";
-import { AppState, enhancers, rootReducer } from "./app.state";
+import { CustomRequestOptions } from 'app/shared/http/custom-request-options';
+import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
+import { AppState, enhancers, rootReducer } from './app.state';
 
 
 @NgModule({
