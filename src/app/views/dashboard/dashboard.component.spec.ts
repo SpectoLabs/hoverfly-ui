@@ -25,6 +25,7 @@ class MockHoverflyService {
 
 describe('Component: Dashboard', () => {
 
+  let hoverflyService: MockHoverflyService;
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 
@@ -44,9 +45,15 @@ describe('Component: Dashboard', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
+    hoverflyService = TestBed.get(HoverflyService);
   });
 
   it('should create the dashboard', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('should start polling hoverfly on init', () => {
+    expect(hoverflyService.pollHoverfly).toHaveBeenCalled();
+  })
 });
