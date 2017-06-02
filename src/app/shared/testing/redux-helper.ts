@@ -1,15 +1,15 @@
-import { NgRedux } from "@angular-redux/store";
-import { Observable } from "rxjs";
+import { MockNgRedux } from '@angular-redux/store/lib/testing';
+import { Observable } from 'rxjs/Observable';
 
-export class MockRedux extends NgRedux<any> {
+export class MockRedux extends MockNgRedux<any> {
   constructor(private state: any) {
-    super(null);
+    super();
   }
 
   dispatch = () => {
   };
 
-  select() {
+  select = () => {
     return Observable.of(this.state);
   }
 }

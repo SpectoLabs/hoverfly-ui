@@ -4,8 +4,8 @@ import { DashboardComponent } from './dashboard.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HoverflyService } from '../../shared/services/hoverfly.service';
-import { HttpModule } from "@angular/http";
-import { NgReduxModule } from "@angular-redux/store";
+import { HttpModule } from '@angular/http';
+import { NgReduxModule } from '@angular-redux/store';
 
 @NgModule({
   declarations: [ DashboardComponent ],

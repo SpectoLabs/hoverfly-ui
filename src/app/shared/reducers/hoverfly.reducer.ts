@@ -1,7 +1,7 @@
-import { Hoverfly, NullHoverfly } from "../models/hoverfly.model";
-import { createReducer } from "../create-reducer";
-import { fromJS, Map } from "immutable";
-import { HOVERFLY_ACTIONS } from "../services/hoverfly.service";
+import { Hoverfly, NullHoverfly } from '../models/hoverfly.model';
+import { createReducer } from '../create-reducer';
+import { fromJS, Map } from 'immutable';
+import { HOVERFLY_ACTIONS } from '../services/hoverfly.service';
 export interface HoverflyState {
   hoverfly: Hoverfly;
 }

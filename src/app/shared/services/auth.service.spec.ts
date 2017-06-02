@@ -1,9 +1,9 @@
-import { Injector, ReflectiveInjector } from "@angular/core";
-import { MockBackend, MockConnection } from "@angular/http/testing";
-import { AuthService } from "./auth.service";
-import { BaseRequestOptions, ConnectionBackend, Http, RequestOptions, ResponseOptions, Response } from "@angular/http";
+import { Injector, ReflectiveInjector } from '@angular/core';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { AuthService } from './auth.service';
+import { BaseRequestOptions, ConnectionBackend, Http, RequestOptions, ResponseOptions, Response } from '@angular/http';
 import createSpy = jasmine.createSpy;
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 class MockRouter {
   navigate = createSpy('navigate');

@@ -4,8 +4,8 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, ConnectionBackend, Http, ResponseOptions, Response, RequestOptions, RequestMethod } from '@angular/http';
 import { HOVERFLY_ACTIONS, HoverflyService } from './hoverfly.service';
 import { fakeAsync, tick } from '@angular/core/testing';
-import { NgRedux } from "@angular-redux/store";
-import { AppState } from "../../app.state";
+import { NgRedux } from '@angular-redux/store';
+import { AppState } from '../../app.state';
 
 describe('Service: Hoverfly', () => {
 
@@ -34,7 +34,6 @@ describe('Service: Hoverfly', () => {
 
   it('getVersion should dispatch an update action', () => {
 
-    let result;
     service.getVersion();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { version: 'v0.11.4'},
@@ -54,7 +53,6 @@ describe('Service: Hoverfly', () => {
 
   it('getMode should dispatch an update action', fakeAsync(() => {
 
-    let result;
     service.getMode();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { mode: 'capture'},
@@ -74,8 +72,7 @@ describe('Service: Hoverfly', () => {
 
   it('setMode should send hoverfly mode', fakeAsync(() => {
 
-    let result;
-    service.setMode("capture");
+    service.setMode('capture');
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { mode: 'capture'},
       status: 200
@@ -95,7 +92,6 @@ describe('Service: Hoverfly', () => {
 
   it('getDestination should dispatch an update action', fakeAsync(() => {
 
-    let result;
     service.getDestination();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: { destination: 'destination.com'},
@@ -115,10 +111,9 @@ describe('Service: Hoverfly', () => {
 
   it('getMiddleware should dispatch an update action', fakeAsync(() => {
 
-    let result;
     service.getMiddleware();
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { 
+      body: {
        remote: 'one',
        binary: 'two'
       },
@@ -131,7 +126,7 @@ describe('Service: Hoverfly', () => {
 
     expect(ngRedux.dispatch).toHaveBeenCalledWith({
       type: HOVERFLY_ACTIONS.UPDATE,
-      payload: { 
+      payload: {
         remote: 'one',
         binary: 'two'
        }
@@ -146,7 +141,7 @@ describe('Service: Hoverfly', () => {
     tick();  // only effective when this is wrapped in fakeAsync(). Wait for all reactive events to complete
 
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { 
+      body: {
         usage: {
           counters: {
             capture: 1,
