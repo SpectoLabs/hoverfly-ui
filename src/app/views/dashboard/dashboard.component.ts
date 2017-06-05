@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.hoverfly$.subscribe((hoverfly: Map<any, any>) => {
+      // console.log(hoverfly.toJS());
       this.hoverfly = hoverfly.toJS();
     });
 

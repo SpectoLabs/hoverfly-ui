@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
 import { Subscription } from 'rxjs/Subscription';
+import { Middleware } from '../models/middlware.model';
 
 export const HOVERFLY_ACTIONS = {
 
@@ -56,9 +57,10 @@ export class HoverflyService {
   getMiddleware() {
     this.http.get('/api/v2/hoverfly/middleware')
       .map(res => res.json())
+      .filter((data: Middleware) => !!data.binary || !!data.script || !!data.remote)
       .subscribe(data => this.ngRedux.dispatch({
         type: HOVERFLY_ACTIONS.UPDATE,
-        payload: data
+        payload: { middleware: data }
       }));
   }
 

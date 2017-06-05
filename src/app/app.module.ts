@@ -35,7 +35,7 @@ import { AppState, enhancers, rootReducer } from './app.state';
   ],
   providers: [
     ...ngModuleSharedProviders,
-    {provide: APP_BASE_HREF, useValue : '/' },
+    { provide: APP_BASE_HREF, useValue : '/' },
     {
       provide: RequestOptions,
       useClass: CustomRequestOptions

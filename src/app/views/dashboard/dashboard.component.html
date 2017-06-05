@@ -9,17 +9,17 @@
           <table class="table">
             <tr>
               <td class="col-sm-3">Mode</td>
-              <td class="col-sm-9"><span class="label label-info">{{ hoverfly.mode }}</span></td>
+              <td class="col-sm-9" id="hoverfly-info-mode"><span class="label label-info">{{ hoverfly.mode }}</span></td>
             </tr>
             <tr>
               <td class="col-sm-3">Destination</td>
-              <td class="col-sm-9">
+              <td class="col-sm-9" id="hoverfly-info-dest">
                   <code>{{ hoverfly.destination }}</code>
               </td>
             </tr>
             <tr>
               <td class="col-sm-3">Version</td>
-              <td class="col-sm-9">{{ hoverfly.version }}</td>
+              <td class="col-sm-9" id="hoverfly-info-ver">{{ hoverfly.version }}</td>
             </tr>
           </table>
         </div>
@@ -72,36 +72,32 @@
         <div class="panel-heading">
           Middleware
         </div>
-        <div class="panel-body">
 
+        <div id="hoverfly-middleware-details" class="panel-body" *ngIf="hoverfly.middleware; else defaultMiddlewareMessage">
           <div class="table-responsive">
-              <table class="table">
-                <tr>
-                  <td class="col-sm-5">Remote</td>
-                  <td class="col-sm-7"><code>{{ hoverfly.remote }}</code></td>
-                </tr>
-                <tr>
-                  <td class="col-sm-5">Binary</td>
-                  <td class="col-sm-7"><code>{{ hoverfly.binary }}</code></td>
-                </tr>
-              </table>
-            </div>
-
+            <table class="table">
+              <tr>
+                <td class="col-sm-5">Remote</td>
+                <td class="col-sm-7" id="hoverfly-middleware-details-remote" ><code>{{ hoverfly.middleware.remote }}</code></td>
+              </tr>
+              <tr>
+                <td class="col-sm-5">Binary</td>
+                <td class="col-sm-7" id="hoverfly-middleware-details-binary"><code>{{ hoverfly.middleware.binary }}</code></td>
+              </tr>
+            </table>
+          </div>
           <div>
             <p>Script</p>
-            <pre class="pre-scrollable pre-middleware">
-              <code>{{ hoverfly.script }}</code>
+            <pre class="pre-scrollable pre-middleware" id="hoverfly-middleware-details-script">
+              <code>{{ hoverfly.middleware.script }}</code>
             </pre>
           </div>
         </div>
+
+        <ng-template #defaultMiddlewareMessage>
+          <div id="hoverfly-middleware-default-body" class="panel-body" >No middleware is set.</div>
+        </ng-template>
+
       </div>
     </div>
-    <div class="col-md-6 panel-wrapper">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Charts
-        </div>
-        <div class="panel-body">
-
-        </div>
-  </div>
+</div>
