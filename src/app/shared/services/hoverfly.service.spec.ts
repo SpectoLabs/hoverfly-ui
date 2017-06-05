@@ -117,12 +117,13 @@ describe('Service: Hoverfly', () => {
 
   it('getMiddleware should dispatch an update action', () => {
 
+    const middlewareData = {
+      remote: 'one',
+      binary: 'two'
+    };
     service.getMiddleware();
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: {
-        remote: 'one',
-        binary: 'two'
-      },
+      body: middlewareData,
       status: 200
     })));
 
@@ -133,10 +134,7 @@ describe('Service: Hoverfly', () => {
     expect(ngRedux.dispatch).toHaveBeenCalledWith({
       type: HOVERFLY_ACTIONS.UPDATE,
       payload: {
-        middleware: {
-          remote: 'one',
-          binary: 'two'
-        }
+        middleware: middlewareData
       }
     });
 
@@ -161,19 +159,21 @@ describe('Service: Hoverfly', () => {
 
   it('getUsage should dispatch an update action', () => {
 
+    const usageData = {
+      usage: {
+        counters: {
+          capture: 1,
+          modify: 2,
+          simulate: 3,
+          synthesize: 4
+        }
+      }
+    };
+
     service.getUsage();
 
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: {
-        usage: {
-          counters: {
-            capture: 1,
-            modify: 2,
-            simulate: 3,
-            synthesize: 4
-          }
-        }
-      },
+      body: usageData,
       status: 200
     })));
     expect(lastConnection).toBeDefined();
@@ -182,16 +182,7 @@ describe('Service: Hoverfly', () => {
 
     expect(ngRedux.dispatch).toHaveBeenCalledWith({
       type: HOVERFLY_ACTIONS.UPDATE,
-      payload: {
-        usage: {
-          counters: {
-            capture: 1,
-            modify: 2,
-            simulate: 3,
-            synthesize: 4
-          }
-        }
-      }
+      payload: usageData
     });
   });
 

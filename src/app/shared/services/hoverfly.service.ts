@@ -18,58 +18,40 @@ export class HoverflyService {
   getVersion(): void {
     this.http.get('/api/v2/hoverfly/version')
       .map(res => res.json())
-      .subscribe(data => this.ngRedux.dispatch({
-        type: HOVERFLY_ACTIONS.UPDATE,
-        payload: data
-      }));
+      .subscribe(this.updateHoverfly());
   }
 
   getMode(): void {
     this.http.get('/api/v2/hoverfly/mode')
       .map(res => res.json())
-      .subscribe(data => this.ngRedux.dispatch({
-        type: HOVERFLY_ACTIONS.UPDATE,
-        payload: data
-      }));
+      .subscribe(this.updateHoverfly());
   }
 
   setMode(modeSelection): void {
     this.http.put('/api/v2/hoverfly/mode', JSON.stringify({ mode: modeSelection }))
       .map(res => res.json())
-      .subscribe(data => this.ngRedux.dispatch({
-        type: HOVERFLY_ACTIONS.UPDATE,
-        payload: data
-      }));
+      .subscribe(this.updateHoverfly());
   }
 
   getDestination(): void {
     this.http.get('/api/v2/hoverfly/destination')
       .map(res => res.json())
-      .subscribe(data => this.ngRedux.dispatch({
-        type: HOVERFLY_ACTIONS.UPDATE,
-        payload: data
-      }));
+      .subscribe(this.updateHoverfly());
   }
 
   getMiddleware(): void {
     this.http.get('/api/v2/hoverfly/middleware')
       .map(res => res.json())
       .filter((data: Middleware) => !!data.binary || !!data.script || !!data.remote)
-      .subscribe(data => this.ngRedux.dispatch({
-        type: HOVERFLY_ACTIONS.UPDATE,
-        payload: { middleware: data }
-      }));
+      .map(data => new Object({ middleware: data }))
+      .subscribe(this.updateHoverfly());
   }
 
   getUsage(): void {
       this.http.get('/api/v2/hoverfly/usage')
         .map(res => res.json())
-        .subscribe(data => this.ngRedux.dispatch({
-          type: HOVERFLY_ACTIONS.UPDATE,
-          payload: data
-        }));
+        .subscribe(this.updateHoverfly());
   }
-
 
   pollHoverfly(): Subscription {
 
@@ -81,6 +63,13 @@ export class HoverflyService {
         this.getUsage();
       });
 
+  }
+
+  private updateHoverfly() {
+    return data => this.ngRedux.dispatch({
+      type: HOVERFLY_ACTIONS.UPDATE,
+      payload: data
+    });
   }
 
 }
