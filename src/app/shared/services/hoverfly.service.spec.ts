@@ -1,7 +1,14 @@
-
 import { Injector, ReflectiveInjector } from '@angular/core';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions, ConnectionBackend, Http, ResponseOptions, Response, RequestOptions, RequestMethod } from '@angular/http';
+import {
+  BaseRequestOptions,
+  ConnectionBackend,
+  Http,
+  RequestMethod,
+  RequestOptions,
+  Response,
+  ResponseOptions
+} from '@angular/http';
 import { HOVERFLY_ACTIONS, HoverflyService } from './hoverfly.service';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { NgRedux } from '@angular-redux/store';
@@ -36,7 +43,7 @@ describe('Service: Hoverfly', () => {
 
     service.getVersion();
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { version: 'v0.11.4'},
+      body: { version: 'v0.11.4' },
       status: 200
     })));
 
@@ -46,7 +53,7 @@ describe('Service: Hoverfly', () => {
 
     expect(ngRedux.dispatch).toHaveBeenCalledWith({
       type: HOVERFLY_ACTIONS.UPDATE,
-      payload: {version: 'v0.11.4'}
+      payload: { version: 'v0.11.4' }
     });
 
   });
@@ -55,7 +62,7 @@ describe('Service: Hoverfly', () => {
 
     service.getMode();
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { mode: 'capture'},
+      body: { mode: 'capture' },
       status: 200
     })));
 
@@ -74,7 +81,7 @@ describe('Service: Hoverfly', () => {
 
     service.setMode('capture');
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { mode: 'capture'},
+      body: { mode: 'capture' },
       status: 200
     })));
 
@@ -94,7 +101,7 @@ describe('Service: Hoverfly', () => {
 
     service.getDestination();
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { destination: 'destination.com'},
+      body: { destination: 'destination.com' },
       status: 200
     })));
 
@@ -114,8 +121,8 @@ describe('Service: Hoverfly', () => {
     service.getMiddleware();
     lastConnection.mockRespond(new Response(new ResponseOptions({
       body: {
-       remote: 'one',
-       binary: 'two'
+        remote: 'one',
+        binary: 'two'
       },
       status: 200
     })));
@@ -127,14 +134,33 @@ describe('Service: Hoverfly', () => {
     expect(ngRedux.dispatch).toHaveBeenCalledWith({
       type: HOVERFLY_ACTIONS.UPDATE,
       payload: {
-        remote: 'one',
-        binary: 'two'
-       }
+        middleware: {
+          remote: 'one',
+          binary: 'two'
+        }
+      }
     });
 
   }));
 
-    it('getUsage should return hoverfly stats', fakeAsync(() => {
+  it('should not dispatch an update action if getMiddleware returns empty an object', fakeAsync(() => {
+
+    service.getMiddleware();
+    lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: {
+        remote: '',
+        binary: ''
+      },
+      status: 200
+    })));
+
+    expect(lastConnection).toBeDefined();
+
+    expect(ngRedux.dispatch).not.toHaveBeenCalled();
+
+  }));
+
+  it('getUsage should return hoverfly stats', fakeAsync(() => {
 
     let result;
     service.getUsage().take(1).subscribe(mode => result = mode); // take the first event from the series of polling
