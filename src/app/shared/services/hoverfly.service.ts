@@ -7,18 +7,15 @@ import { Subscription } from 'rxjs/Subscription';
 import { Middleware } from '../models/middlware.model';
 
 export const HOVERFLY_ACTIONS = {
-
   UPDATE: 'UPDATE'
 };
 
 @Injectable()
 export class HoverflyService {
-  private pollingInterval = 5000;
-
   constructor(private http: Http, private ngRedux: NgRedux<AppState>) {
   }
 
-  getVersion() {
+  getVersion(): void {
     this.http.get('/api/v2/hoverfly/version')
       .map(res => res.json())
       .subscribe(data => this.ngRedux.dispatch({
@@ -27,7 +24,7 @@ export class HoverflyService {
       }));
   }
 
-  getMode() {
+  getMode(): void {
     this.http.get('/api/v2/hoverfly/mode')
       .map(res => res.json())
       .subscribe(data => this.ngRedux.dispatch({
@@ -36,7 +33,7 @@ export class HoverflyService {
       }));
   }
 
-  setMode(modeSelection) {
+  setMode(modeSelection): void {
     this.http.put('/api/v2/hoverfly/mode', JSON.stringify({ mode: modeSelection }))
       .map(res => res.json())
       .subscribe(data => this.ngRedux.dispatch({
@@ -45,7 +42,7 @@ export class HoverflyService {
       }));
   }
 
-  getDestination() {
+  getDestination(): void {
     this.http.get('/api/v2/hoverfly/destination')
       .map(res => res.json())
       .subscribe(data => this.ngRedux.dispatch({
@@ -54,7 +51,7 @@ export class HoverflyService {
       }));
   }
 
-  getMiddleware() {
+  getMiddleware(): void {
     this.http.get('/api/v2/hoverfly/middleware')
       .map(res => res.json())
       .filter((data: Middleware) => !!data.binary || !!data.script || !!data.remote)
@@ -64,9 +61,13 @@ export class HoverflyService {
       }));
   }
 
-  getUsage(): Observable<any> {
-    return Observable.timer(0, this.pollingInterval)
-      .switchMap(() => this.http.get('/api/v2/hoverfly/usage').map(res => res.json().usage.counters));
+  getUsage(): void {
+      this.http.get('/api/v2/hoverfly/usage')
+        .map(res => res.json())
+        .subscribe(data => this.ngRedux.dispatch({
+          type: HOVERFLY_ACTIONS.UPDATE,
+          payload: data
+        }));
   }
 
 
@@ -77,6 +78,7 @@ export class HoverflyService {
         this.getMode();
         this.getDestination();
         this.getMiddleware();
+        this.getUsage();
       });
 
   }
