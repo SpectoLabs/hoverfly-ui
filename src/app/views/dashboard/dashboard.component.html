@@ -53,11 +53,11 @@
               <th>Modified</th>
               <th>Synthesized</th>
             </tr>
-            <tr>
-              <td><span class="label label-default">90,423,221</span></td>
-              <td><span class="label label-default">201,776,003</span></td>
-              <td><span class="label label-default">254,909,111,233</span></td>
-              <td><span class="label label-default">6</span></td>
+            <tr id="hoverfly-counters">
+              <td><span class="label label-default">{{ hoverfly?.usage?.counters?.capture || 0 }}</span></td>
+              <td><span class="label label-default">{{ hoverfly?.usage?.counters?.simulate || 0 }}</span></td>
+              <td><span class="label label-default">{{ hoverfly?.usage?.counters?.modify || 0 }}</span></td>
+              <td><span class="label label-default">{{ hoverfly?.usage?.counters?.synthesize || 0 }}</span></td>
             </tr>
         </table>
       </div>

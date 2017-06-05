@@ -80,28 +80,23 @@ describe('Component: Dashboard', () => {
   it('should show middleware details if middleware is set', async(() => {
 
     TestBed.resetTestingModule();
-    const stateWithMiddleware: Map<any, any> = fromJS(
-      {
-        version: 'v0.11.4',
-        mode: 'simulate',
+    const stateWithMiddleware: Map<any, any> = fromJS({
         middleware: {
           binary: 'java',
           script: 'empty placeholder file'
         }
-      }
-    );
+    });
 
     configureTestModule(stateWithMiddleware).then(() => {
       MockNgRedux.reset();
       fixture = TestBed.createComponent(DashboardComponent);
+
       const binaryField = fixture.debugElement.query(By.css('#hoverfly-middleware-details-binary code'));
       const remoteField = fixture.debugElement.query(By.css('#hoverfly-middleware-details-remote code'));
       const scriptBlock = fixture.debugElement.query(By.css('#hoverfly-middleware-details-script code'));
-
       const defaultBody = fixture.debugElement.query(By.css('#hoverfly-middleware-default-body'));
 
       expect(defaultBody).toBeFalsy();
-
       expect(binaryField.nativeElement.textContent).toBe('java');
       expect(remoteField.nativeElement.textContent).toBe('');
       expect(scriptBlock.nativeElement.textContent).toBe('empty placeholder file');
@@ -118,5 +113,38 @@ describe('Component: Dashboard', () => {
 
     expect(defaultBody.nativeElement.textContent).toBe('No middleware is set.');
   });
+
+  it('should initialize usage counters to zeros', () => {
+    const counters = fixture.debugElement.query(By.css('#hoverfly-counters'));
+
+    counters.children.forEach(c => expect(c.nativeElement.textContent).toBe('0'));
+  });
+
+  it('should show usage counters', async(() => {
+
+    TestBed.resetTestingModule();
+    const stateWithMiddleware: Map<any, any> = fromJS({
+        usage: {
+          counters: {
+            capture: 100,
+            simulate: 200,
+            modify: 300,
+            synthesize: 400
+          }
+        }
+    });
+
+    configureTestModule(stateWithMiddleware).then(() => {
+      MockNgRedux.reset();
+      fixture = TestBed.createComponent(DashboardComponent);
+
+      const counters = fixture.debugElement.query(By.css('#hoverfly-counters'));
+
+      expect(counters.children[0].nativeElement.textContent).toBe('100');
+      expect(counters.children[1].nativeElement.textContent).toBe('200');
+      expect(counters.children[2].nativeElement.textContent).toBe('300');
+      expect(counters.children[3].nativeElement.textContent).toBe('400');
+    });
+  }));
 
 });
