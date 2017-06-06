@@ -10,12 +10,17 @@ import { AuthService } from '../../shared/services/auth.service';
     'login.component.css'
   ]
 })
-export class LoginComponent {
-
+export class LoginComponent implements OnInit {
   // @ViewChild('loginForm') public loginForm: NgForm;
-  router: Router;
 
-  constructor(private authService: AuthService) {
+  ngOnInit(): void {
+    // if (sessionStorage.getItem('api-token')) {
+    //
+    //   this.router.navigate(['/dashboard'])
+    // }
+  }
+
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   login(formValue) {
