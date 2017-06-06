@@ -11,6 +11,7 @@ import { fromJS } from 'immutable';
 import { Subscription } from 'rxjs/Subscription';
 import { By } from '@angular/platform-browser';
 import { MockNgRedux } from '@angular-redux/store/lib/testing';
+import { click } from '../../shared/testing/click-helper';
 
 
 const mockState: Map<any, any> = fromJS(
@@ -23,8 +24,8 @@ const mockState: Map<any, any> = fromJS(
 
 class MockHoverflyService {
   pollHoverfly = createSpy('pollHoverfly').and.returnValue(new Subscription());
-  getUsage = createSpy('getUsage');
   getVersion = createSpy('getVersion');
+  setMode = createSpy('setMode')
 }
 
 describe('Component: Dashboard', () => {
@@ -146,5 +147,20 @@ describe('Component: Dashboard', () => {
       expect(counters.children[3].nativeElement.textContent).toBe('400');
     });
   }));
+
+  it('should set mode when click on mode selector', () => {
+    const captureLink = fixture.debugElement.query(By.css('#hoverfly-mode-selector:first-child a')).nativeElement;
+    click(captureLink);
+
+    expect(hoverflyService.setMode).toHaveBeenCalledWith('capture');
+  });
+
+  it('should highlight current mode selector button', () => {
+    const captureLink = fixture.debugElement.query(By.css('#hoverfly-mode-selector:first-child a'));
+    const simulateLink = fixture.debugElement.query(By.css('#hoverfly-mode-selector [name=simulate]'));
+
+    expect(captureLink.nativeElement.className).toContain('btn-default');
+    expect(simulateLink.nativeElement.className).toContain('btn-primary');
+  })
 
 });

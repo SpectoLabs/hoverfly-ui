@@ -32,11 +32,11 @@
         Mode selector
       </div>
       <div class="panel-body text-center">
-        <div class="btn-group btn-group-mode">
-          <a (click)="setMode($event)" name="capture" class="btn btn-default btn-xs btn-mode">Capture</a>
-          <a (click)="setMode($event)" name="simulate" class="btn btn-default btn-xs btn-mode">Simulate</a>
-          <a (click)="setMode($event)" name="modify" class="btn btn-default btn-xs btn-mode">Modify</a>
-          <a (click)="setMode($event)" name="synthesize" class="btn btn-default btn-xs btn-mode">Synthesize</a>
+        <div class="btn-group btn-group-mode" id="hoverfly-mode-selector" >
+          <a (click)="setMode($event)" name="capture" [class.btn-primary]="hoverfly.mode === 'capture'" class="btn btn-xs btn-default btn-mode">Capture</a>
+          <a (click)="setMode($event)" name="simulate"  [class.btn-primary]="hoverfly.mode ==='simulate'" class="btn btn-default btn-xs btn-mode">Simulate</a>
+          <a (click)="setMode($event)" name="modify" [class.btn-primary]="hoverfly.mode ==='modify'" class="btn btn-default btn-xs btn-mode">Modify</a>
+          <a (click)="setMode($event)" name="synthesize" [class.btn-primary]="hoverfly.mode ==='synthesize'" class="btn btn-default btn-xs btn-mode">Synthesize</a>
         </div>
       </div>
      </div> 

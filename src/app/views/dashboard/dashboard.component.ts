@@ -16,10 +16,11 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
   public hoverfly: Hoverfly;
   private pollingSubscription: Subscription;
+
+  constructor(private service: HoverflyService) {}
 
   ngOnInit(): void {
     this.hoverfly$.subscribe((hoverfly: Map<any, any>) => {
@@ -33,8 +34,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.pollingSubscription.unsubscribe();
   }
-
-  constructor(private service: HoverflyService) {}
 
   setMode(event) {
     this.service.setMode(event.srcElement.name)
