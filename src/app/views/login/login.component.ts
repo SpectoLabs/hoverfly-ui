@@ -17,7 +17,6 @@ export class LoginComponent {
   router: Router;
 
   constructor(private authService: AuthService) {
-
   }
 
   login() {
