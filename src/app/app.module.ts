@@ -9,7 +9,7 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { LoginModule } from './views/login/login.module';
 import { DashboardModule } from './views/dashboard/dashboard.module';
-import { TopnavbarModule } from './components/topnavbar/topnavbar.module';
+import { TopNavBarModule } from './components/topnavbar/topnavbar.module';
 
 import { ngModuleSharedProviders } from './shared/index';
 import { APP_BASE_HREF } from '@angular/common';
@@ -31,7 +31,7 @@ import { AppState, enhancers, rootReducer } from './app.state';
 
     LoginModule,
     DashboardModule,
-    TopnavbarModule,
+    TopNavBarModule,
 
     // Third-party modules
     NgReduxModule

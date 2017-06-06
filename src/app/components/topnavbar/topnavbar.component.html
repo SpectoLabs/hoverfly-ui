@@ -1,22 +1,23 @@
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-          aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        <a class="navbar-brand hoverfly-logo-sm-white">Hoverfly</a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="https://hoverfly.readthedocs.io/en/{{version}}/"><i class="fa fa-book" aria-hidden="true"></i>Docs</a></li>
-          <li><a href="https://github.com/SpectoLabs/Hoverfly"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a></li>
-          <li *ngIf="showLogoutLink" (click)="logout()"><a><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a></li>
-        </ul>
-      </div>
-      <!--/.nav-collapse -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"-->
+            <!--aria-controls="navbar">-->
+            <!--<span class="sr-only">Toggle navigation</span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <a class="navbar-brand hoverfly-logo-sm-white">Hoverfly</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://hoverfly.readthedocs.io/en/{{version}}/"><i class="fa fa-book"
+                                                                                 aria-hidden="true"></i>Docs</a></li>
+                <li><a href="https://github.com/SpectoLabs/Hoverfly"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+                </li>
+                <li *ngIf="showLogoutLink" (click)="logout()"><a><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a></li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>

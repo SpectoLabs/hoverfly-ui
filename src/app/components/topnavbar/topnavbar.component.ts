@@ -2,35 +2,35 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { fromJS, Map } from 'immutable';
+import { Map } from 'immutable';
+import { Hoverfly } from '../../shared/models/hoverfly.model';
 
 @Component({
   selector: 'app-topnavbar',
   templateUrl: './topnavbar.component.html',
   styleUrls: ['./topnavbar.component.css']
 })
-export class TopnavbarComponent implements OnInit {
+export class TopNavBarComponent implements OnInit {
 
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
   public version = 'latest';
+  // TODO: there is not API endpoint to check if hoverfly has auth enabled or not
   public showLogoutLink: boolean;
 
   constructor(private authService: AuthService) {
-    this.hoverfly$
-      .map((hoverfly: Map<any, any>) => hoverfly.toJS().version)
-      .filter(version => version)
-      .subscribe(version =>  this.version = version);
   }
 
   ngOnInit() {
-    this.authService.onLogin.subscribe((loggedIn: boolean) => {
-      this.showLogoutLink = loggedIn;
-    });
+    this.hoverfly$
+      .map((hoverfly: Map<any, any>) => hoverfly.toJS())
+      .subscribe((hoverfly: Hoverfly) =>  {
+        this.version = hoverfly.version || 'latest';
+      });
   }
 
   logout() {
     this.authService.logout();
-    this.showLogoutLink = false
+    this.showLogoutLink = false;
   }
 
 }
