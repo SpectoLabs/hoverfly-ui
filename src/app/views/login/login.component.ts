@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 
@@ -12,15 +12,15 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class LoginComponent {
 
-  public username: string;
-  public password: string;
+  // @ViewChild('loginForm') public loginForm: NgForm;
   router: Router;
 
   constructor(private authService: AuthService) {
   }
 
-  login() {
-    this.authService.login(this.username, this.password);
+  login(formValue) {
+
+    this.authService.login(formValue.username, formValue.password);
   }
 
 }

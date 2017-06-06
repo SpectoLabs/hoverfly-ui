@@ -1,13 +1,15 @@
-<form #loginForm="ngForm" (ngSubmit)="login()" class="form-signin">
+<div class="col-md-4 col-md-offset-4 login-alert">
+    <!--<div class="alert alert-danger">Login failed</div>-->
+</div>
+<div class="col-md-4 col-md-offset-4">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="form-group">
     <h2 class="form-signin-heading">Please log in</h2>
 
-    <label for="inputUsername" class="sr-only">Username</label>
-    <input id="inputUsername" type="string" class="form-control" 
-        [(ngModel)]="username" name="username" #inputUsername="ngModel" required placeholder="Username">
-           
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input id="inputPassword" type="password" class="form-control"
-        [(ngModel)]="password" name="password" #inputPassword="ngModel" required placeholder="Password">
-        
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-</form>
+        <input  type="text" class="form-control" ngModel name="username" id="username-input" required placeholder="Username" autofocus/>
+    <!--<div *ngIf="loginForm.submitted && !inputUsername.valid" class="alert alert-danger">Username is required</div>-->
+
+        <input type="password" class="form-control" ngModel name="password" id="password-input" required placeholder="Password" />
+
+        <button class="btn btn-primary btn-block" id="login" type="submit">Log in</button>
+    </form>
+</div>

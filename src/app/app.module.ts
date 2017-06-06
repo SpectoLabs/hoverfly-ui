@@ -23,14 +23,17 @@ import { AppState, enhancers, rootReducer } from './app.state';
     AppComponent,
   ],
   imports: [
+    // Angular modules
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES),
+
     LoginModule,
     DashboardModule,
     TopnavbarModule,
 
+    // Third-party modules
     NgReduxModule
   ],
   providers: [
