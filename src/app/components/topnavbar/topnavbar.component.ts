@@ -14,13 +14,18 @@ export class TopNavBarComponent implements OnInit {
 
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
   public version = 'latest';
-  // TODO: there is not API endpoint to check if hoverfly has auth enabled or not
+  // TODO: there is no API endpoint to check if hoverfly has auth enabled or not
   public showLogoutLink: boolean;
 
   constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
+
+    this.authService.isAuthEnabled.subscribe((isAuthEnabled: boolean) => {
+      this.showLogoutLink = isAuthEnabled || false;
+    });
+
     this.hoverfly$
       .map((hoverfly: Map<any, any>) => hoverfly.toJS())
       .subscribe((hoverfly: Hoverfly) =>  {
