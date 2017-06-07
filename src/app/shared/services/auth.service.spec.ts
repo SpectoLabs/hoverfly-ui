@@ -9,7 +9,7 @@ import createSpy = jasmine.createSpy;
 import { Router } from '@angular/router';
 
 class MockRouter {
-  navigate = createSpy('navigate');
+  navigateByUrl = createSpy('navigateByUrl');
 }
 
 describe('Service: Auth', () => {
@@ -78,7 +78,7 @@ describe('Service: Auth', () => {
 
     service.logout();
 
-    expect(router.navigate).toHaveBeenCalledWith([ '/login' ]);
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
   });
 
 
@@ -96,7 +96,7 @@ describe('Service: Auth', () => {
     expect(lastConnection.request.method).toBe(RequestMethod.Post);
 
     expect(sessionStorage.getItem(SESSION_API_TOKEN)).toBe('some-token');
-    expect(router.navigate).toHaveBeenCalledWith([ '/dashboard' ]);
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
   });
 
 

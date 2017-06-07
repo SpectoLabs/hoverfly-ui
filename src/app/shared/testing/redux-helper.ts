@@ -7,9 +7,6 @@ export class MockRedux extends MockNgRedux<any> {
     super();
   }
 
-  dispatch = () => {
-  };
-
   select = () => {
     return Observable.of(this.state);
   }

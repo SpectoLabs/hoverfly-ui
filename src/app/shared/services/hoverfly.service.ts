@@ -7,7 +7,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Middleware } from '../models/middlware.model';
 
 export const HOVERFLY_ACTIONS = {
-  UPDATE: 'UPDATE'
+  UPDATE: 'UPDATE',
+  NOTIFY_ERROR: 'NOTIFY_ERROR'
 };
 
 @Injectable()
@@ -36,7 +37,16 @@ export class HoverflyService {
   getDestination(): void {
     this.http.get('/api/v2/hoverfly/destination')
       .map(res => res.json())
-      .subscribe(this.updateHoverfly());
+      .subscribe(this.updateHoverfly(), err => {
+        console.log(err.status);
+        if (err.status === 0) {
+          console.log('notiffy error')
+          this.ngRedux.dispatch({
+            type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
+            payload: 'SERVICE_UNAVAILABLE'
+          })
+        }
+      });
   }
 
   getMiddleware(): void {

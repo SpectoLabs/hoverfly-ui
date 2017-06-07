@@ -16,11 +16,15 @@ import { APP_BASE_HREF } from '@angular/common';
 import { CustomRequestOptions } from 'app/shared/http/custom-request-options';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { AppState, enhancers, rootReducer } from './app.state';
+import { AlertModule, ModalModule } from 'ngx-bootstrap';
+import { DialogboxModule } from './components/dialogbox/dialogbox.module';
+import { StatusDialogComponent } from './components/status-dialog/status-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    StatusDialogComponent
   ],
   imports: [
     // Angular modules
@@ -32,9 +36,13 @@ import { AppState, enhancers, rootReducer } from './app.state';
     LoginModule,
     DashboardModule,
     TopNavBarModule,
+    DialogboxModule,
 
     // Third-party modules
-    NgReduxModule
+    NgReduxModule,
+
+    AlertModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     ...ngModuleSharedProviders,

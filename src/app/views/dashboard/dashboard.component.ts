@@ -5,6 +5,7 @@ import { Hoverfly } from '../../shared/models/hoverfly.model';
 import { select } from '@angular-redux/store';
 import { Map } from 'immutable';
 import { Subscription } from 'rxjs/Subscription';
+import { API_ERRORS } from '../../shared/http/api-errors';
 
 
 @Component({
@@ -17,8 +18,10 @@ import { Subscription } from 'rxjs/Subscription';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
+  @select([ 'hoverfly', 'error' ]) error$: Observable<string>;
+
   public hoverfly: Hoverfly;
-  private pollingSubscription: Subscription;
+  public pollingSubscription: Subscription;
 
   constructor(private service: HoverflyService) {}
 
@@ -29,6 +32,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.service.getVersion();
     this.pollingSubscription = this.service.pollHoverfly();
+
+    this.error$
+      .filter(error => error === API_ERRORS.SERVICE_UNAVAILABLE)
+      .subscribe(() => this.pollingSubscription.unsubscribe());
   }
 
   ngOnDestroy(): void {
