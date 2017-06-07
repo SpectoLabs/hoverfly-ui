@@ -17,7 +17,6 @@ export class AuthService {
 
     // if (!!sessionStorage.getItem(SESSION_AUTH_ENABLED)) {
     //   this.isAuthEnabled.emit(true);
-    //   console.log('auth enabled')
     // }
     return this.http.get('/api/v2/hoverfly/version')
       .map((res: Response) => res.status === 200)
@@ -34,18 +33,17 @@ export class AuthService {
         sessionStorage.setItem(SESSION_API_TOKEN, token);
         // sessionStorage.setItem(SESSION_AUTH_ENABLED, 'true');
         // this.isAuthEnabled.emit(true);
-        console.log('login checked');
         this.redirectToHome();
       }, err => console.log(err));
   }
 
   logout() {
     sessionStorage.clear();
-    this.router.navigate([ '/login' ]);
+    this.router.navigateByUrl('/login');
   }
 
   redirectToHome() {
-    this.router.navigate([ '/dashboard' ]);
+    this.router.navigateByUrl('/dashboard');
   }
 
   hasSession(): boolean {

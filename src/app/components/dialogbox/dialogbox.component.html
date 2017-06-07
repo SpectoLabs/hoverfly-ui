@@ -1,0 +1,15 @@
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" (onHidden)="onChildHidden()" [config]="{ ignoreBackdropClick: true }">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ dialogTitle }}</h4>
+      </div>
+      <div class="modal-body">
+        <ng-content select="[dialog-body]"></ng-content>
+      </div>
+      <div class="modal-footer">
+        <ng-content select="[dialog-actions]"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

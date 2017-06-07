@@ -1,0 +1,6 @@
+<app-dialogbox #dialogbox dialogTitle="Hoverfly is not running">
+  <div dialog-body>Please start Hoverfly and click `Retry`.</div>
+  <div dialog-actions>
+    <button id="retry-button" type="button" class="btn btn-primary" [disabled]="isRetrying" (click)="onRetry()">{{ isRetrying ? 'Retrying...' : 'Retry'}}</button>
+  </div>
+</app-dialogbox>

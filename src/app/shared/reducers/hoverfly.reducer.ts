@@ -4,15 +4,20 @@ import { fromJS, Map } from 'immutable';
 import { HOVERFLY_ACTIONS } from '../services/hoverfly.service';
 export interface HoverflyState {
   hoverfly: Hoverfly;
+  error: string;
 }
 
 const INITIAL_STATE: Map<any, any> = fromJS({
-  hoverfly: {}
+  hoverfly: {},
+  error: ''
 });
 
 export const hoverflyReducer = createReducer(INITIAL_STATE, {
 
   [HOVERFLY_ACTIONS.UPDATE]: (state: Map<any, any>, action) =>
 
-    state.update('hoverfly', (hoverfly: Map<any, any>) => hoverfly.merge(fromJS(action.payload)))
+    state.update('hoverfly', (hoverfly: Map<any, any>) => hoverfly.merge(fromJS(action.payload))),
+
+  [HOVERFLY_ACTIONS.NOTIFY_ERROR]: (state: Map<any, any>, action) => state.set('error', action.payload)
+
 });

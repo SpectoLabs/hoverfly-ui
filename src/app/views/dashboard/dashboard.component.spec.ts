@@ -1,7 +1,7 @@
 
 
 import { DashboardComponent } from './dashboard.component';
-import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { DashboardModule } from './dashboard.module';
 import createSpy = jasmine.createSpy;
 import { HoverflyService } from '../../shared/services/hoverfly.service';
@@ -161,6 +161,13 @@ describe('Component: Dashboard', () => {
 
     expect(captureLink.nativeElement.className).toContain('btn-default');
     expect(simulateLink.nativeElement.className).toContain('btn-primary');
-  })
+  });
+
+  it('should unsubscribe from polling on destroy', () => {
+    spyOn(component.pollingSubscription, 'unsubscribe');
+    component.ngOnDestroy();
+
+    expect(component.pollingSubscription.unsubscribe).toHaveBeenCalled();
+  });
 
 });
