@@ -11,7 +11,6 @@ class MockAuthService {
 }
 
 
-
 describe('Load Guard', () => {
 
   let injector: Injector;
