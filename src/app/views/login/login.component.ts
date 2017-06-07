@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 
 
@@ -11,16 +10,11 @@ import { AuthService } from '../../shared/services/auth.service';
   ]
 })
 export class LoginComponent implements OnInit {
-  // @ViewChild('loginForm') public loginForm: NgForm;
 
   ngOnInit(): void {
-    // if (sessionStorage.getItem('api-token')) {
-    //
-    //   this.router.navigate(['/dashboard'])
-    // }
   }
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService) {
   }
 
   login(formValue) {
