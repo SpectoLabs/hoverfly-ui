@@ -6,6 +6,7 @@ import { select } from '@angular-redux/store';
 import { Map } from 'immutable';
 import { Subscription } from 'rxjs/Subscription';
 import { API_ERRORS } from '../../shared/http/error-handling';
+import { NotificationService } from '../../components/notifications/notification.service';
 
 
 @Component({
@@ -18,12 +19,11 @@ import { API_ERRORS } from '../../shared/http/error-handling';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
-  @select([ 'hoverfly', 'error' ]) error$: Observable<string>;
 
   public hoverfly: Hoverfly;
   public pollingSubscription: Subscription;
 
-  constructor(private service: HoverflyService) {}
+  constructor(private service: HoverflyService, private notiffyService: NotificationService) {}
 
   ngOnInit(): void {
     this.hoverfly$.subscribe((hoverfly: Map<any, any>) => {
@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.service.getVersion();
     this.pollingSubscription = this.service.pollHoverfly();
 
-    this.error$
+    this.notiffyService.errors
       .filter(error => error === API_ERRORS.SERVICE_UNAVAILABLE)
       .subscribe(() => this.pollingSubscription.unsubscribe());
   }

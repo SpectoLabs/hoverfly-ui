@@ -4,8 +4,7 @@ import createSpy = jasmine.createSpy;
 import { Injector, ReflectiveInjector } from '@angular/core';
 import { LoadGuard } from './load.guard';
 import { AuthService } from '../services/auth.service';
-import { MockAuthService } from '../testing/mock-helper';
-
+import { MockAuthService } from '../testing/mock-helper.spec';
 
 describe('Load Guard', () => {
 

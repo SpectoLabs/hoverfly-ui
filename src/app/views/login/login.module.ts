@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { AlertModule } from 'ngx-bootstrap';
+import { NotificationService } from '../../components/notifications/notification.service';
 
 @NgModule({
   declarations: [ LoginComponent ],
@@ -14,7 +15,10 @@ import { AlertModule } from 'ngx-bootstrap';
     FormsModule,
     AlertModule
   ],
-  providers: [ AuthService ]
+  providers: [
+    AuthService,
+    NotificationService
+  ]
 })
 
 export class LoginModule {

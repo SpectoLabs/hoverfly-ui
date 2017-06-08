@@ -14,6 +14,8 @@ import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
 import { mockErrorResponse } from '../testing/http-helper';
 import { API_ERRORS } from '../http/error-handling';
+import { NotificationService } from '../../components/notifications/notification.service';
+import { MockNotificationService } from '../testing/mock-helper.spec';
 
 describe('Service: Hoverfly', () => {
 
@@ -22,12 +24,14 @@ describe('Service: Hoverfly', () => {
   let lastConnection: MockConnection;
   let service: HoverflyService;
   let ngRedux: NgRedux<AppState>;
+  let notifyService: MockNotificationService;
 
   beforeEach(() => {
     ngRedux = new NgRedux<AppState>(null);
     spyOn(ngRedux, 'dispatch');
     injector = ReflectiveInjector.resolveAndCreate([
       { provide: NgRedux, useValue: ngRedux },
+      { provide: NotificationService, useClass: MockNotificationService },
       { provide: ConnectionBackend, useClass: MockBackend },
       { provide: RequestOptions, useClass: BaseRequestOptions },
       Http,
@@ -35,6 +39,7 @@ describe('Service: Hoverfly', () => {
     ]);
 
     service = injector.get(HoverflyService);
+    notifyService = injector.get(NotificationService) as MockNotificationService;
     backend = injector.get(ConnectionBackend) as MockBackend;
     backend.connections.subscribe(connection => lastConnection = connection);
 
@@ -124,10 +129,7 @@ describe('Service: Hoverfly', () => {
 
     expect(lastConnection).toBeDefined();
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-      payload: API_ERRORS.SERVICE_UNAVAILABLE
-    });
+    expect(notifyService.sendError).toHaveBeenCalledWith(API_ERRORS.SERVICE_UNAVAILABLE);
   });
 
   it('getMiddleware should dispatch an update action', () => {

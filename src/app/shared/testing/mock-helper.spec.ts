@@ -1,4 +1,6 @@
+
 import createSpy = jasmine.createSpy;
+import { EventEmitter } from '@angular/core';
 
 export class MockAuthService {
   checkAuthenticated = createSpy('checkAuthenticated');
@@ -14,6 +16,11 @@ export class MockRouter {
   setUrl(url) {
     this.url = url;
   }
+}
+
+export class MockNotificationService {
+  errors = new EventEmitter<string>();
+  sendError = createSpy('sendError');
 }
 
 

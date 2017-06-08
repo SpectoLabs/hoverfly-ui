@@ -4,6 +4,7 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { API_ERRORS } from '../../shared/http/error-handling';
 import { StatusDialogService } from './status-dialog.service';
+import { NotificationService } from '../notifications/notification.service';
 
 // Component for providing feedback for Hoverfly Status and managing reconnection
 @Component({
@@ -14,13 +15,12 @@ import { StatusDialogService } from './status-dialog.service';
 export class StatusDialogComponent implements OnInit {
 
   @ViewChild('dialogbox') dialogbox: DialogboxComponent;
-  @select([ 'hoverfly', 'error' ]) error$: Observable<string>;
   public isRetrying: boolean;
 
 
   ngOnInit(): void {
     // TODO: missing test
-    this.error$
+    this.notifyService.errors
       .subscribe(error => {
         if (error === API_ERRORS.SERVICE_UNAVAILABLE) {
           this.dialogbox.showChildModal();
@@ -31,7 +31,7 @@ export class StatusDialogComponent implements OnInit {
       });
   }
 
-  constructor(private service: StatusDialogService) {
+  constructor(private service: StatusDialogService, private notifyService: NotificationService) {
     this.isRetrying = false;
   }
 

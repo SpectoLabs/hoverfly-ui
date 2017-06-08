@@ -1,51 +1,38 @@
 
-import { NgRedux } from '@angular-redux/store';
-import { AppState } from '../../app.state';
 import { API_ERRORS, notifyError } from './error-handling';
 import { mockErrorResponse } from '../testing/http-helper';
-import { HOVERFLY_ACTIONS } from '../services/hoverfly.service';
+import { NotificationService } from '../../components/notifications/notification.service';
+import createSpy = jasmine.createSpy;
+import { MockNotificationService } from '../testing/mock-helper.spec';
 describe('Http error handler', () => {
-  let ngRedux: NgRedux<AppState>;
+  let service: NotificationService;
 
   beforeEach(() => {
-    ngRedux = new NgRedux<AppState>(null);
-    spyOn(ngRedux, 'dispatch');
+    service = new MockNotificationService() as NotificationService;
   });
 
   it('should dispatch SERVICE_UNAVAILABLE error on status code 0', () => {
-    notifyError(mockErrorResponse(0), ngRedux);
+    notifyError(mockErrorResponse(0), service);
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-      payload: API_ERRORS.SERVICE_UNAVAILABLE
-    })
+    expect(service.sendError).toHaveBeenCalledWith(API_ERRORS.SERVICE_UNAVAILABLE);
   });
 
   it('should dispatch UNAUTHORIZED error on status code 401', () => {
-    notifyError(mockErrorResponse(401), ngRedux);
+    notifyError(mockErrorResponse(401), service);
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-      payload: API_ERRORS.UNAUTHORIZED
-    })
+    expect(service.sendError).toHaveBeenCalledWith(API_ERRORS.UNAUTHORIZED);
   });
 
   it('should dispatch TOO_MANY_REQUESTS error on status code 429', () => {
-    notifyError(mockErrorResponse(429), ngRedux);
+    notifyError(mockErrorResponse(429), service);
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-      payload: API_ERRORS.TOO_MANY_REQUESTS
-    })
+    expect(service.sendError).toHaveBeenCalledWith(API_ERRORS.TOO_MANY_REQUESTS);
   });
 
   it('should dispatch DEFAULT error on other status code', () => {
-    notifyError(mockErrorResponse(500), ngRedux);
+    notifyError(mockErrorResponse(500), service);
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-      payload: API_ERRORS.DEFAULT
-    })
+    expect(service.sendError).toHaveBeenCalledWith(API_ERRORS.DEFAULT);
   });
 
 });

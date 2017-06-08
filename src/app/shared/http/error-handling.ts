@@ -1,7 +1,5 @@
 import { Response } from '@angular/http';
-import { NgRedux } from '@angular-redux/store';
-import { AppState } from '../../app.state';
-import { HOVERFLY_ACTIONS } from '../services/hoverfly.service';
+import { NotificationService } from '../../components/notifications/notification.service';
 
 export const API_ERRORS = {
   SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
@@ -10,26 +8,26 @@ export const API_ERRORS = {
   DEFAULT: 'DEFAULT'
 };
 
-export function httpErrorHandler(ngRedux: NgRedux<AppState>) {
+export function httpErrorHandler(notifyService: NotificationService) {
 
-  return err => notifyError(err, ngRedux);
+  return err => notifyError(err, notifyService);
 }
 
-export function notifyError(err, ngRedux: NgRedux<AppState>) {
+export function notifyError(err, notifyService: NotificationService) {
   if (err instanceof Response) {
     // Response with status 0 is returned when network disconnected
     switch (err.status) {
       case 0:
-        dispatchError(ngRedux, API_ERRORS.SERVICE_UNAVAILABLE);
+        notifyService.sendError(API_ERRORS.SERVICE_UNAVAILABLE);
         break;
       case 401:
-        dispatchError(ngRedux, API_ERRORS.UNAUTHORIZED);
+        notifyService.sendError(API_ERRORS.UNAUTHORIZED);
         break;
       case 429:
-        dispatchError(ngRedux, API_ERRORS.TOO_MANY_REQUESTS);
+        notifyService.sendError(API_ERRORS.TOO_MANY_REQUESTS);
         break;
       default:
-        dispatchError(ngRedux, API_ERRORS.DEFAULT);
+        notifyService.sendError(API_ERRORS.DEFAULT);
     }
   } else {
     // TODO send generic error message to user
@@ -37,10 +35,3 @@ export function notifyError(err, ngRedux: NgRedux<AppState>) {
   }
 }
 
-
-function dispatchError(ngRedux: NgRedux<AppState>, error: string) {
-  ngRedux.dispatch({
-    type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-    payload: error
-  })
-}
