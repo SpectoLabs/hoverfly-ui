@@ -9,6 +9,7 @@ import createSpy = jasmine.createSpy;
 import { By } from '@angular/platform-browser';
 import { click } from '../../shared/testing/click-helper';
 import { NgModel } from '@angular/forms';
+import { AlertModule } from 'ngx-bootstrap';
 
 class MockAuthService {
   login = createSpy('login');
@@ -24,7 +25,8 @@ describe('Component: Login', () => {
     TestBed.configureTestingModule({
       imports: [
         LoginModule,
-        RouterTestingModule
+        RouterTestingModule,
+        AlertModule.forRoot()
       ],
       providers: [
         { provide: AuthService, useClass: MockAuthService },

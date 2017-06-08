@@ -24,9 +24,12 @@ export class TopNavBarComponent implements OnInit {
 
   ngOnInit() {
 
+    // TODO: not being trigger again after navigate from login to logout page
     this.error$
       .filter(error => error === API_ERRORS.UNAUTHORIZED)
-      .subscribe(() => this.logout()
+      .subscribe(() => {
+        this.logout()
+        }
       );
 
     this.hoverfly$
