@@ -1,27 +1,26 @@
 import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { StatusDialogComponent } from './status-dialog.component';
-import { DialogboxComponent } from '../dialogbox/dialogbox.component';
-import { ModalModule } from 'ngx-bootstrap';
-import { AuthService } from '../../shared/services/auth.service';
 import createSpy = jasmine.createSpy;
-import { Observable } from 'rxjs/Observable';
+import { StatusDialogService } from './status-dialog.service';
+import { StatusDialogModule } from './status-dialog.module';
 
-class MockAuthService {
-  checkAuthenticated = createSpy('checkAuthenticated').and.returnValue(Observable.of(false));
+class MockStatusDialogService {
+  retry = createSpy('retry');
 }
 
 describe('StatusDialogComponent', () => {
   let component: StatusDialogComponent;
   let fixture: ComponentFixture<StatusDialogComponent>;
-  let authService: AuthService;
+  let service: StatusDialogService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusDialogComponent, DialogboxComponent ],
-      imports: [ ModalModule.forRoot() ],
+      imports: [
+        StatusDialogModule
+      ],
       providers: [
-        { provide: AuthService, useClass: MockAuthService },
+        { provide: StatusDialogService, useClass: MockStatusDialogService },
         { provide: ComponentFixtureAutoDetect, useValue: true }
       ]
     })
@@ -31,7 +30,7 @@ describe('StatusDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StatusDialogComponent);
     component = fixture.componentInstance;
-    authService = TestBed.get(AuthService);
+    service = TestBed.get(StatusDialogService);
   });
 
   it('should be created', () => {
@@ -42,6 +41,6 @@ describe('StatusDialogComponent', () => {
 
     component.onRetry();
 
-    expect(authService.checkAuthenticated).toHaveBeenCalled();
+    expect(service.retry).toHaveBeenCalled();
   });
 });

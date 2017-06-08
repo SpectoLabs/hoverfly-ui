@@ -19,12 +19,12 @@ import { AppState, enhancers, rootReducer } from './app.state';
 import { AlertModule, ModalModule } from 'ngx-bootstrap';
 import { DialogboxModule } from './components/dialogbox/dialogbox.module';
 import { StatusDialogComponent } from './components/status-dialog/status-dialog.component';
+import { StatusDialogModule } from './components/status-dialog/status-dialog.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    StatusDialogComponent
+    AppComponent
   ],
   imports: [
     // Angular modules
@@ -36,7 +36,7 @@ import { StatusDialogComponent } from './components/status-dialog/status-dialog.
     LoginModule,
     DashboardModule,
     TopNavBarModule,
-    DialogboxModule,
+    StatusDialogModule,
 
     // Third-party modules
     NgReduxModule,

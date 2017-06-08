@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
     this.error$.subscribe(error => {
       if (error === API_ERRORS.UNAUTHORIZED) {
-        this.loginError = 'Please try again.';
+        this.loginError = 'Authentication failed. Please log in again.';
       } else if (error === API_ERRORS.TOO_MANY_REQUESTS) {
         this.loginError = 'Too many unsuccessful login attempts. Please wait 10 minutes before trying again.';
       }
