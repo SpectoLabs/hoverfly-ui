@@ -7,6 +7,8 @@ import {
 } from '@angular/http';
 import createSpy = jasmine.createSpy;
 import { Router } from '@angular/router';
+import { NgRedux } from '@angular-redux/store';
+import { AppState } from 'app/app.state';
 
 class MockRouter {
   navigateByUrl = createSpy('navigateByUrl');
@@ -19,12 +21,16 @@ describe('Service: Auth', () => {
   let lastConnection: MockConnection;
   let service: AuthService;
   let router: MockRouter;
+  let ngRedux: NgRedux<AppState>
 
   beforeEach(() => {
+    ngRedux = new NgRedux<AppState>(null);
+    spyOn(ngRedux, 'dispatch');
     injector = ReflectiveInjector.resolveAndCreate([
       { provide: ConnectionBackend, useClass: MockBackend },
       { provide: RequestOptions, useClass: BaseRequestOptions },
       { provide: Router, useClass: MockRouter },
+      { provide: NgRedux, useValue: ngRedux },
       Http,
       AuthService
     ]);
