@@ -5,7 +5,8 @@ import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
 import { Subscription } from 'rxjs/Subscription';
 import { Middleware } from '../models/middlware.model';
-import { httpErrorHandler } from '../http/error-handling';
+import { API_ERRORS, httpErrorHandler } from '../http/error-handling';
+import { NotificationService } from '../../components/notifications/notification.service';
 
 export const HOVERFLY_ACTIONS = {
   UPDATE: 'UPDATE',
@@ -14,7 +15,7 @@ export const HOVERFLY_ACTIONS = {
 
 @Injectable()
 export class HoverflyService {
-  constructor(private http: Http, private ngRedux: NgRedux<AppState>) {
+  constructor(private http: Http, private ngRedux: NgRedux<AppState>, private notifyService: NotificationService) {
   }
 
   getVersion(): void {
@@ -22,7 +23,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        httpErrorHandler(this.ngRedux));
+        httpErrorHandler(this.notifyService));
   }
 
   getMode(): void {
@@ -30,7 +31,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        httpErrorHandler(this.ngRedux));
+        httpErrorHandler(this.notifyService));
   }
 
   setMode(modeSelection): void {
@@ -38,7 +39,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        httpErrorHandler(this.ngRedux));
+        httpErrorHandler(this.notifyService));
   }
 
   getDestination(): void {
@@ -46,7 +47,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        httpErrorHandler(this.ngRedux));
+        httpErrorHandler(this.notifyService));
   }
 
   getMiddleware(): void {
@@ -56,7 +57,7 @@ export class HoverflyService {
       .map(data => new Object({ middleware: data }))
       .subscribe(
         this.updateHoverfly(),
-        httpErrorHandler(this.ngRedux));
+        httpErrorHandler(this.notifyService));
   }
 
   getUsage(): void {
@@ -64,7 +65,7 @@ export class HoverflyService {
         .map(res => res.json())
         .subscribe(
           this.updateHoverfly(),
-          httpErrorHandler(this.ngRedux));
+          httpErrorHandler(this.notifyService));
   }
 
   pollHoverfly(): Subscription {

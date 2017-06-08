@@ -20,6 +20,7 @@ import { AlertModule, ModalModule } from 'ngx-bootstrap';
 import { DialogboxModule } from './components/dialogbox/dialogbox.module';
 import { StatusDialogComponent } from './components/status-dialog/status-dialog.component';
 import { StatusDialogModule } from './components/status-dialog/status-dialog.module';
+import { NotificationModule } from './components/notifications/notification.module';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { StatusDialogModule } from './components/status-dialog/status-dialog.mod
     DashboardModule,
     TopNavBarModule,
     StatusDialogModule,
+    NotificationModule,
 
     // Third-party modules
     NgReduxModule,

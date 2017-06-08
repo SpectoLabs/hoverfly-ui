@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HoverflyService } from '../../shared/services/hoverfly.service';
 import { HttpModule } from '@angular/http';
 import { NgReduxModule } from '@angular-redux/store';
+import { NotificationService } from '../../components/notifications/notification.service';
 
 @NgModule({
   declarations: [ DashboardComponent ],
@@ -16,7 +17,10 @@ import { NgReduxModule } from '@angular-redux/store';
     HttpModule,
     NgReduxModule
   ],
-  providers: [ HoverflyService ]
+  providers: [
+    HoverflyService,
+    NotificationService
+  ]
 })
 
 export class DashboardModule {

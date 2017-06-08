@@ -12,9 +12,8 @@ import { AppState } from 'app/app.state';
 import { mockErrorResponse } from '../testing/http-helper';
 import { HOVERFLY_ACTIONS } from './hoverfly.service';
 import { API_ERRORS } from '../http/error-handling';
-import { MockRouter } from '../testing/mock-helper';
-
-
+import { MockNotificationService, MockRouter } from '../testing/mock-helper.spec';
+import { NotificationService } from '../../components/notifications/notification.service';
 
 describe('Service: Auth', () => {
 
@@ -23,21 +22,20 @@ describe('Service: Auth', () => {
   let lastConnection: MockConnection;
   let service: AuthService;
   let router: MockRouter;
-  let ngRedux: NgRedux<AppState>;
+  let notifyService: MockNotificationService;
 
   beforeEach(() => {
-    ngRedux = new NgRedux<AppState>(null);
-    spyOn(ngRedux, 'dispatch');
     injector = ReflectiveInjector.resolveAndCreate([
       { provide: ConnectionBackend, useClass: MockBackend },
       { provide: RequestOptions, useClass: BaseRequestOptions },
       { provide: Router, useClass: MockRouter },
-      { provide: NgRedux, useValue: ngRedux },
+      { provide: NotificationService, useClass: MockNotificationService },
       Http,
       AuthService
     ]);
 
     service = injector.get(AuthService);
+    notifyService = <any> injector.get(NotificationService);
     router = <any> injector.get(Router);
     backend = injector.get(ConnectionBackend) as MockBackend;
     backend.connections.subscribe(connection => lastConnection = connection);
@@ -114,10 +112,7 @@ describe('Service: Auth', () => {
 
     expect(lastConnection).toBeDefined();
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-      payload: API_ERRORS.UNAUTHORIZED
-    });
+    expect(notifyService.sendError).toHaveBeenCalledWith(API_ERRORS.UNAUTHORIZED);
   });
 
   it('should dispatch error notification action when check authentication failed', () => {
@@ -127,10 +122,7 @@ describe('Service: Auth', () => {
 
     expect(lastConnection).toBeDefined();
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-      payload: API_ERRORS.UNAUTHORIZED
-    });
+    expect(notifyService.sendError).toHaveBeenCalledWith(API_ERRORS.UNAUTHORIZED);
   });
 
 

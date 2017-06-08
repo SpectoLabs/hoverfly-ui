@@ -5,6 +5,7 @@ import { Http, Response } from '@angular/http';
 import { NgRedux } from '@angular-redux/store';
 import { httpErrorHandler, notifyError } from '../http/error-handling';
 import { AppState } from '../../app.state';
+import { NotificationService } from '../../components/notifications/notification.service';
 
 export const SESSION_API_TOKEN = 'api-token';
 
@@ -13,7 +14,9 @@ export class AuthService {
 
   @Output() isAuthEnabled: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private router: Router, private http: Http, private ngRedux: NgRedux<AppState>) {
+  constructor(private router: Router,
+              private http: Http,
+              private notifyService: NotificationService) {
   }
 
   checkAuthenticated(): Observable<boolean> {
@@ -21,7 +24,7 @@ export class AuthService {
     return this.http.get('/api/v2/hoverfly/version')
       .map((res: Response) => res.status === 200)
       .catch(err => {
-        notifyError(err, this.ngRedux);
+        notifyError(err, this.notifyService);
         return Observable.of(false);
       });
   }
@@ -36,7 +39,7 @@ export class AuthService {
           sessionStorage.setItem(SESSION_API_TOKEN, token);
           this.redirectToHome();
         },
-        httpErrorHandler(this.ngRedux));
+        httpErrorHandler(this.notifyService));
   }
 
   logout() {

@@ -10,7 +10,7 @@ import { By } from '@angular/platform-browser';
 import { click } from '../../shared/testing/click-helper';
 import { NgModel } from '@angular/forms';
 import { AlertModule } from 'ngx-bootstrap';
-import { MockAuthService } from '../../shared/testing/mock-helper';
+import { MockAuthService } from '../../shared/testing/mock-helper.spec';
 
 
 

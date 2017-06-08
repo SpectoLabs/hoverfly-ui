@@ -5,6 +5,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { RouterModule } from '@angular/router';
 import { DialogboxModule } from '../dialogbox/dialogbox.module';
 import { StatusDialogService } from './status-dialog.service';
+import { NotificationService } from '../notifications/notification.service';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { StatusDialogService } from './status-dialog.service';
   ],
   providers: [
     StatusDialogService,
-    AuthService
+    AuthService,
+    NotificationService
   ],
   exports: [
     StatusDialogComponent

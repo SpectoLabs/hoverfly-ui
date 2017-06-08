@@ -1,0 +1,3 @@
+<ngx-alert *ngIf="notification" id="notification-box" [type]="getAlertClass(notification)" [dismissible]="true" (onClose)="reset()">
+  <strong>{{ notification.message }}</strong>
+</ngx-alert>

@@ -2,10 +2,10 @@
 import { Injector, ReflectiveInjector } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { StatusDialogService } from './status-dialog.service';
-import { MockAuthService, MockRouter } from '../../shared/testing/mock-helper';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { MockAuthService, MockRouter } from '../../shared/testing/mock-helper.spec';
 describe('Service: StatusDialog', () => {
 
   let injector: Injector;
