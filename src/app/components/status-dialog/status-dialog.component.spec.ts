@@ -4,8 +4,6 @@ import { StatusDialogComponent } from './status-dialog.component';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { AuthService } from '../../shared/services/auth.service';
-import { click } from '../../shared/testing/click-helper';
-import { By } from '@angular/platform-browser';
 import createSpy = jasmine.createSpy;
 import { Observable } from 'rxjs/Observable';
 

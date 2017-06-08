@@ -22,9 +22,9 @@ export class TopNavBarComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.isAuthEnabled.subscribe((isAuthEnabled: boolean) => {
-      this.showLogoutLink = isAuthEnabled || false;
-    });
+    // this.authService.isAuthEnabled.subscribe((isAuthEnabled: boolean) => {
+    //   this.showLogoutLink = isAuthEnabled || false;
+    // });
 
     this.hoverfly$
       .map((hoverfly: Map<any, any>) => hoverfly.toJS())

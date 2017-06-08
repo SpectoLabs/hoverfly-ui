@@ -5,7 +5,7 @@ import { Hoverfly } from '../../shared/models/hoverfly.model';
 import { select } from '@angular-redux/store';
 import { Map } from 'immutable';
 import { Subscription } from 'rxjs/Subscription';
-import { API_ERRORS } from '../../shared/http/api-errors';
+import { API_ERRORS } from '../../shared/http/error-handling';
 
 
 @Component({

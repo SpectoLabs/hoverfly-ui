@@ -2,22 +2,30 @@ import { EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
+import { NgRedux, select } from '@angular-redux/store';
+import { API_ERRORS, notifyError } from '../http/error-handling';
+import { AppState } from '../../app.state';
 
 export const SESSION_API_TOKEN = 'api-token';
-export const SESSION_AUTH_ENABLED = 'auth-enabled';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnInit {
+
   @Output() isAuthEnabled: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private router: Router, private http: Http) {
+  @select([ 'hoverfly', 'error' ]) error$: Observable<string>;
+
+  ngOnInit(): void {
+    this.error$
+      .filter(error => error === API_ERRORS.UNAUTHORIZED)
+      .subscribe(() => this.logout());
+  }
+
+  constructor(private router: Router, private http: Http, private ngRedux: NgRedux<AppState>) {
   }
 
   checkAuthenticated(): Observable<boolean> {
 
-    // if (!!sessionStorage.getItem(SESSION_AUTH_ENABLED)) {
-    //   this.isAuthEnabled.emit(true);
-    // }
     return this.http.get('/api/v2/hoverfly/version')
       .map((res: Response) => res.status === 200)
       .catch(err => Observable.of(false));
@@ -30,11 +38,10 @@ export class AuthService {
     })
       .map((res: Response) => res.json().token)
       .subscribe(token => {
-        sessionStorage.setItem(SESSION_API_TOKEN, token);
-        // sessionStorage.setItem(SESSION_AUTH_ENABLED, 'true');
-        // this.isAuthEnabled.emit(true);
-        this.redirectToHome();
-      }, err => console.log(err));
+          sessionStorage.setItem(SESSION_API_TOKEN, token);
+          this.redirectToHome();
+        },
+        notifyError(this.ngRedux));
   }
 
   logout() {

@@ -5,7 +5,7 @@ import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
 import { Subscription } from 'rxjs/Subscription';
 import { Middleware } from '../models/middlware.model';
-import { API_ERRORS } from '../http/api-errors';
+import { notifyError } from '../http/error-handling';
 
 export const HOVERFLY_ACTIONS = {
   UPDATE: 'UPDATE',
@@ -22,8 +22,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        this.errorHandler()
-      );
+        notifyError(this.ngRedux));
   }
 
   getMode(): void {
@@ -31,8 +30,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        this.errorHandler()
-      );
+        notifyError(this.ngRedux));
   }
 
   setMode(modeSelection): void {
@@ -40,7 +38,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        this.errorHandler());
+        notifyError(this.ngRedux));
   }
 
   getDestination(): void {
@@ -48,7 +46,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        this.errorHandler());
+        notifyError(this.ngRedux));
   }
 
   getMiddleware(): void {
@@ -58,7 +56,7 @@ export class HoverflyService {
       .map(data => new Object({ middleware: data }))
       .subscribe(
         this.updateHoverfly(),
-        this.errorHandler());
+        notifyError(this.ngRedux));
   }
 
   getUsage(): void {
@@ -66,8 +64,7 @@ export class HoverflyService {
         .map(res => res.json())
         .subscribe(
           this.updateHoverfly(),
-          this.errorHandler()
-        );
+          notifyError(this.ngRedux));
   }
 
   pollHoverfly(): Subscription {
@@ -80,22 +77,6 @@ export class HoverflyService {
         this.getUsage();
       });
 
-  }
-
-  private errorHandler() {
-    return err => {
-      if (err.status === 0) {
-        this.ngRedux.dispatch({
-          type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-          payload: API_ERRORS.SERVICE_UNAVAILABLE
-        })
-      } else if (err.status === 401) {
-        this.ngRedux.dispatch({
-          type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-          payload: API_ERRORS.UNAUTHORIZED
-        })
-      }
-    };
   }
 
   private updateHoverfly() {
