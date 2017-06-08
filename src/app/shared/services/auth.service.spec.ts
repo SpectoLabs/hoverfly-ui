@@ -9,6 +9,9 @@ import createSpy = jasmine.createSpy;
 import { Router } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from 'app/app.state';
+import { mockErrorResponse } from '../testing/http-helper';
+import { HOVERFLY_ACTIONS } from './hoverfly.service';
+import { API_ERRORS } from '../http/error-handling';
 
 class MockRouter {
   navigateByUrl = createSpy('navigateByUrl');
@@ -105,6 +108,31 @@ describe('Service: Auth', () => {
     expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
   });
 
+  it('should dispatch error notification action when login failed', () => {
+
+    service.login('user', 'password');
+    lastConnection.mockError(mockErrorResponse(401));
+
+    expect(lastConnection).toBeDefined();
+
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
+      payload: API_ERRORS.UNAUTHORIZED
+    });
+  });
+
+  it('should dispatch error notification action when check authentication failed', () => {
+
+    service.checkAuthenticated().subscribe();
+    lastConnection.mockError(mockErrorResponse(401));
+
+    expect(lastConnection).toBeDefined();
+
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
+      payload: API_ERRORS.UNAUTHORIZED
+    });
+  });
 
 
 });
