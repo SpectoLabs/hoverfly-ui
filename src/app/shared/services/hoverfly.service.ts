@@ -5,7 +5,7 @@ import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
 import { Subscription } from 'rxjs/Subscription';
 import { Middleware } from '../models/middlware.model';
-import { notifyError } from '../http/error-handling';
+import { httpErrorHandler } from '../http/error-handling';
 
 export const HOVERFLY_ACTIONS = {
   UPDATE: 'UPDATE',
@@ -22,7 +22,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        notifyError(this.ngRedux));
+        httpErrorHandler(this.ngRedux));
   }
 
   getMode(): void {
@@ -30,7 +30,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        notifyError(this.ngRedux));
+        httpErrorHandler(this.ngRedux));
   }
 
   setMode(modeSelection): void {
@@ -38,7 +38,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        notifyError(this.ngRedux));
+        httpErrorHandler(this.ngRedux));
   }
 
   getDestination(): void {
@@ -46,7 +46,7 @@ export class HoverflyService {
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
-        notifyError(this.ngRedux));
+        httpErrorHandler(this.ngRedux));
   }
 
   getMiddleware(): void {
@@ -56,7 +56,7 @@ export class HoverflyService {
       .map(data => new Object({ middleware: data }))
       .subscribe(
         this.updateHoverfly(),
-        notifyError(this.ngRedux));
+        httpErrorHandler(this.ngRedux));
   }
 
   getUsage(): void {
@@ -64,7 +64,7 @@ export class HoverflyService {
         .map(res => res.json())
         .subscribe(
           this.updateHoverfly(),
-          notifyError(this.ngRedux));
+          httpErrorHandler(this.ngRedux));
   }
 
   pollHoverfly(): Subscription {

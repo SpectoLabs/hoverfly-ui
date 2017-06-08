@@ -4,6 +4,7 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Map } from 'immutable';
 import { Hoverfly } from '../../shared/models/hoverfly.model';
+import { API_ERRORS } from '../../shared/http/error-handling';
 
 @Component({
   selector: 'app-topnavbar',
@@ -13,6 +14,7 @@ import { Hoverfly } from '../../shared/models/hoverfly.model';
 export class TopNavBarComponent implements OnInit {
 
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
+  @select([ 'hoverfly', 'error' ]) error$: Observable<string>;
   public version = 'latest';
   // TODO: there is no API endpoint to check if hoverfly has auth enabled or not
   public showLogoutLink: boolean;
@@ -22,9 +24,10 @@ export class TopNavBarComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.authService.isAuthEnabled.subscribe((isAuthEnabled: boolean) => {
-    //   this.showLogoutLink = isAuthEnabled || false;
-    // });
+    this.error$
+      .filter(error => error === API_ERRORS.UNAUTHORIZED)
+      .subscribe(() => this.logout()
+      );
 
     this.hoverfly$
       .map((hoverfly: Map<any, any>) => hoverfly.toJS())

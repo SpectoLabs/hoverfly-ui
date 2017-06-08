@@ -20,16 +20,17 @@ export class StatusDialogComponent implements OnInit {
   ngOnInit(): void {
     // TODO: missing test
     this.error$
-      .filter(error => error === API_ERRORS.SERVICE_UNAVAILABLE)
-      .subscribe(() => this.show());
+      .subscribe(error => {
+        if (error === API_ERRORS.SERVICE_UNAVAILABLE) {
+          this.dialogbox.showChildModal();
+        } else {
+          this.dialogbox.hideChildModal();
+        }
+      });
   }
 
   constructor(private authService: AuthService) {
     this.isRetrying = false;
-  }
-
-  show() {
-    this.dialogbox.showChildModal();
   }
 
   onRetry() {

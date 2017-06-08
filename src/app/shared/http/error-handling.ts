@@ -9,24 +9,30 @@ export const API_ERRORS = {
   DEFAULT: 'DEFAULT'
 };
 
-export function notifyError(ngRedux: NgRedux<AppState>) {
+export function httpErrorHandler(ngRedux: NgRedux<AppState>) {
 
-  return err => {
-    if (err instanceof Response) {
-      // Response with status 0 is returned when network disconnected
-      switch (err.status) {
-        case 0:
-          dispatchError(ngRedux, API_ERRORS.SERVICE_UNAVAILABLE);
-          break;
-        case 401:
-          dispatchError(ngRedux, API_ERRORS.UNAUTHORIZED);
-          break;
-        default:
-          dispatchError(ngRedux, API_ERRORS.DEFAULT);
-      }
+  return err => notifyError(err, ngRedux);
+}
+
+export function notifyError(err, ngRedux: NgRedux<AppState>) {
+  if (err instanceof Response) {
+    // Response with status 0 is returned when network disconnected
+    switch (err.status) {
+      case 0:
+        dispatchError(ngRedux, API_ERRORS.SERVICE_UNAVAILABLE);
+        break;
+      case 401:
+        dispatchError(ngRedux, API_ERRORS.UNAUTHORIZED);
+        break;
+      default:
+        dispatchError(ngRedux, API_ERRORS.DEFAULT);
     }
+  } else {
+    // TODO send generic error message to user
+    console.log('Caught error: ' + err);
   }
 }
+
 
 function dispatchError(ngRedux: NgRedux<AppState>, error: string) {
   ngRedux.dispatch({
