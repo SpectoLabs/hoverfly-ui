@@ -24,7 +24,7 @@ describe('Service: Auth', () => {
   let lastConnection: MockConnection;
   let service: AuthService;
   let router: MockRouter;
-  let ngRedux: NgRedux<AppState>
+  let ngRedux: NgRedux<AppState>;
 
   beforeEach(() => {
     ngRedux = new NgRedux<AppState>(null);
