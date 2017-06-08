@@ -4,11 +4,7 @@ import createSpy = jasmine.createSpy;
 import { Injector, ReflectiveInjector } from '@angular/core';
 import { LoadGuard } from './load.guard';
 import { AuthService } from '../services/auth.service';
-class MockAuthService {
-
-  hasSession = createSpy('hasSession');
-  redirectToHome = createSpy('redirectToHome');
-}
+import { MockAuthService } from '../testing/mock-helper';
 
 
 describe('Load Guard', () => {

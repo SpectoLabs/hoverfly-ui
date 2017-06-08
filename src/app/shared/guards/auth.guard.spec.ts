@@ -5,13 +5,7 @@ import createSpy = jasmine.createSpy;
 import { AuthGuard } from './auth.guard';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service';
-
-class MockAuthService {
-
-  checkAuthenticated = createSpy('checkAuthenticated');
-  logout = createSpy('logout');
-}
-
+import { MockAuthService } from '../testing/mock-helper';
 
 
 describe('Auth Guard', () => {

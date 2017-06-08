@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
-import { AuthService } from '../../shared/services/auth.service';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { API_ERRORS } from '../../shared/http/error-handling';
+import { StatusDialogService } from './status-dialog.service';
 
+// Component for providing feedback for Hoverfly Status and managing reconnection
 @Component({
   selector: 'app-status-dialog',
   templateUrl: './status-dialog.component.html',
@@ -24,22 +25,19 @@ export class StatusDialogComponent implements OnInit {
         if (error === API_ERRORS.SERVICE_UNAVAILABLE) {
           this.dialogbox.showChildModal();
         } else {
+          // hide the modal for other types of errors assuming hoverfly is back up
           this.dialogbox.hideChildModal();
         }
       });
   }
 
-  constructor(private authService: AuthService) {
+  constructor(private service: StatusDialogService) {
     this.isRetrying = false;
   }
 
   onRetry() {
     this.isRetrying = true;
-    this.authService.checkAuthenticated().subscribe(isHealthy => {
-      if (isHealthy) {
-        window.location.reload();
-      }
-    });
+    this.service.retry();
     this.isRetrying = false;
   }
 }

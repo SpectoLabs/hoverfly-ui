@@ -5,11 +5,8 @@ import { TopNavBarModule } from './topnavbar.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import createSpy = jasmine.createSpy;
 import { AuthService } from '../../shared/services/auth.service';
+import { MockAuthService } from '../../shared/testing/mock-helper';
 
-
-class MockAuthService {
-  login = createSpy('login');
-}
 
 describe('Component: TopNavBar', () => {
   let component: TopNavBarComponent;

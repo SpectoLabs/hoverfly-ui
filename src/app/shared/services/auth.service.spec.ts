@@ -12,10 +12,9 @@ import { AppState } from 'app/app.state';
 import { mockErrorResponse } from '../testing/http-helper';
 import { HOVERFLY_ACTIONS } from './hoverfly.service';
 import { API_ERRORS } from '../http/error-handling';
+import { MockRouter } from '../testing/mock-helper';
 
-class MockRouter {
-  navigateByUrl = createSpy('navigateByUrl');
-}
+
 
 describe('Service: Auth', () => {
 

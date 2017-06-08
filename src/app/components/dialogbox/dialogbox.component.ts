@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from "ngx-bootstrap";
 
+// Skeleton component for modal dialog box
 @Component({
   selector: 'app-dialogbox',
   templateUrl: './dialogbox.component.html',
