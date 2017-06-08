@@ -12,6 +12,11 @@ import {
 import { HOVERFLY_ACTIONS, HoverflyService } from './hoverfly.service';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
+import { baseServeCommandOptions } from '@angular/cli/commands/serve';
+import { mockErrorResponse } from '../testing/http-helper';
+import { API_ERRORS } from '../http/api-errors';
+
+
 
 describe('Service: Hoverfly', () => {
 
@@ -113,6 +118,31 @@ describe('Service: Hoverfly', () => {
       payload: { destination: 'destination.com' }
     });
 
+  });
+
+  it('getDestination failed with connection refused error should dispatch an error', () => {
+
+    service.getDestination();
+    lastConnection.mockError(mockErrorResponse(0));
+
+    expect(lastConnection).toBeDefined();
+
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
+      payload: API_ERRORS.SERVICE_UNAVAILABLE
+    });
+  });
+
+  it('getDestination failed with auth error should dispatch an error', () => {
+    service.getDestination();
+    lastConnection.mockError(mockErrorResponse(401));
+
+    expect(lastConnection).toBeDefined();
+
+    expect(ngRedux.dispatch).toHaveBeenCalledWith({
+      type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
+      payload: API_ERRORS.UNAUTHORIZED
+    });
   });
 
   it('getMiddleware should dispatch an update action', () => {

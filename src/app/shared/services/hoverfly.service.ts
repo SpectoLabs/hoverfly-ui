@@ -5,6 +5,7 @@ import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
 import { Subscription } from 'rxjs/Subscription';
 import { Middleware } from '../models/middlware.model';
+import { API_ERRORS } from '../http/api-errors';
 
 export const HOVERFLY_ACTIONS = {
   UPDATE: 'UPDATE',
@@ -19,34 +20,35 @@ export class HoverflyService {
   getVersion(): void {
     this.http.get('/api/v2/hoverfly/version')
       .map(res => res.json())
-      .subscribe(this.updateHoverfly());
+      .subscribe(
+        this.updateHoverfly(),
+        this.errorHandler()
+      );
   }
 
   getMode(): void {
     this.http.get('/api/v2/hoverfly/mode')
       .map(res => res.json())
-      .subscribe(this.updateHoverfly());
+      .subscribe(
+        this.updateHoverfly(),
+        this.errorHandler()
+      );
   }
 
   setMode(modeSelection): void {
     this.http.put('/api/v2/hoverfly/mode', JSON.stringify({ mode: modeSelection }))
       .map(res => res.json())
-      .subscribe(this.updateHoverfly());
+      .subscribe(
+        this.updateHoverfly(),
+        this.errorHandler());
   }
 
   getDestination(): void {
     this.http.get('/api/v2/hoverfly/destination')
       .map(res => res.json())
-      .subscribe(this.updateHoverfly(), err => {
-        console.log(err.status);
-        if (err.status === 0) {
-          console.log('notiffy error')
-          this.ngRedux.dispatch({
-            type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
-            payload: 'SERVICE_UNAVAILABLE'
-          })
-        }
-      });
+      .subscribe(
+        this.updateHoverfly(),
+        this.errorHandler());
   }
 
   getMiddleware(): void {
@@ -54,13 +56,18 @@ export class HoverflyService {
       .map(res => res.json())
       .filter((data: Middleware) => !!data.binary || !!data.script || !!data.remote)
       .map(data => new Object({ middleware: data }))
-      .subscribe(this.updateHoverfly());
+      .subscribe(
+        this.updateHoverfly(),
+        this.errorHandler());
   }
 
   getUsage(): void {
       this.http.get('/api/v2/hoverfly/usage')
         .map(res => res.json())
-        .subscribe(this.updateHoverfly());
+        .subscribe(
+          this.updateHoverfly(),
+          this.errorHandler()
+        );
   }
 
   pollHoverfly(): Subscription {
@@ -73,6 +80,22 @@ export class HoverflyService {
         this.getUsage();
       });
 
+  }
+
+  private errorHandler() {
+    return err => {
+      if (err.status === 0) {
+        this.ngRedux.dispatch({
+          type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
+          payload: API_ERRORS.SERVICE_UNAVAILABLE
+        })
+      } else if (err.status === 401) {
+        this.ngRedux.dispatch({
+          type: HOVERFLY_ACTIONS.NOTIFY_ERROR,
+          payload: API_ERRORS.UNAUTHORIZED
+        })
+      }
+    };
   }
 
   private updateHoverfly() {
