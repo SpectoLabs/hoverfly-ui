@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit {
       if (error === API_ERRORS.UNAUTHORIZED) {
         this.loginError = 'Please try again.';
       } else if (error === API_ERRORS.TOO_MANY_REQUESTS) {
-        this.loginError = 'Too many unsuccessful login attempts. Please wait 10 minutes before trying again. ' +
-          '(Alternatively, you can restart Hoverfly)'
+        this.loginError = 'Too many unsuccessful login attempts. Please wait 10 minutes before trying again.';
       }
       // other error is ignored?
     })
