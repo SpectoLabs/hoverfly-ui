@@ -6,6 +6,7 @@ import { HOVERFLY_ACTIONS } from '../services/hoverfly.service';
 export const API_ERRORS = {
   SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
   UNAUTHORIZED: 'UNAUTHORIZED',
+  TOO_MANY_REQUESTS: 'TOO_MANY_REQUESTS',
   DEFAULT: 'DEFAULT'
 };
 
@@ -23,6 +24,9 @@ export function notifyError(err, ngRedux: NgRedux<AppState>) {
         break;
       case 401:
         dispatchError(ngRedux, API_ERRORS.UNAUTHORIZED);
+        break;
+      case 429:
+        dispatchError(ngRedux, API_ERRORS.TOO_MANY_REQUESTS);
         break;
       default:
         dispatchError(ngRedux, API_ERRORS.DEFAULT);
