@@ -1,6 +1,6 @@
 # Hoverfly UI
 
-[![CircleCI](https://circleci.com/gh/SpectoLabs/hoverfly-java.svg?style=shield)](https://circleci.com/gh/SpectoLabs/hoverfly-java) [![Join the chat at https://gitter.im/SpectoLabs/hoverfly](https://badges.gitter.im/SpectoLabs/hoverfly.svg)](https://gitter.im/SpectoLabs/hoverfly?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![CircleCI](https://circleci.com/gh/SpectoLabs/hoverfly-ui.svg?style=shield)](https://circleci.com/gh/SpectoLabs/hoverfly-ui) [![Join the chat at https://gitter.im/SpectoLabs/hoverfly](https://badges.gitter.im/SpectoLabs/hoverfly.svg)](https://gitter.im/SpectoLabs/hoverfly?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Hoverfly UI is the Angular 4 frontend application that is bundled with [Hoverfly](https://github.com/SpectoLabs/hoverfly).
 
