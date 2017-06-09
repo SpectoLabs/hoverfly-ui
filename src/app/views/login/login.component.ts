@@ -11,8 +11,6 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class LoginComponent {
 
-  public loginError: string;
-
   constructor(private authService: AuthService) {
   }
 
