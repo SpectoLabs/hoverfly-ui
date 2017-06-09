@@ -1,6 +1,5 @@
 
-import { EventEmitter, Injectable, Output } from "@angular/core";
-import { Notification } from "./notification.model";
+import { EventEmitter, Injectable, Output } from '@angular/core';
 
 
 @Injectable()

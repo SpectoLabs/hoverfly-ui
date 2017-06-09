@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Notification, NOTIFICATION_TYPE } from './notification.model';
 import { NotificationService } from './notification.service';
+import { API_ERRORS } from '../../shared/http/error-handling';
 
 @Component({
   selector: 'app-notifications',
@@ -9,26 +9,20 @@ import { NotificationService } from './notification.service';
 })
 export class NotificationsComponent implements OnInit {
 
-  public notification: Notification;
+  public notification: string;
 
   constructor(private service: NotificationService) {
   }
 
   ngOnInit() {
-    this.service.errors.subscribe((notification: Notification) => {
-      this.notification = notification || null;
-    });
-  }
-
-  getAlertClass(notification: Notification) {
-    let alertClass = 'success';
-    if (notification) {
-      alertClass = notification.type === NOTIFICATION_TYPE.ERROR ? 'danger' : 'success';
-    }
-    return alertClass;
-  }
-
-  reset() {
-    this.notification = null;
+    this.service.errors
+      .subscribe(error => {
+        if (error === API_ERRORS.UNAUTHORIZED) {
+          this.notification = 'Authentication failed. Please log in again.';
+        } else if (error === API_ERRORS.TOO_MANY_REQUESTS) {
+          this.notification = 'Too many unsuccessful login attempts. Please wait 10 minutes before trying again.';
+        }
+        // other error is ignored?
+      })
   }
 }
