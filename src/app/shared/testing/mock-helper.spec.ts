@@ -20,7 +20,9 @@ export class MockRouter {
 
 export class MockNotificationService {
   errors = new EventEmitter<string>();
+  events = new EventEmitter<string>();
   sendError = createSpy('sendError');
+  sendEvent = createSpy('sendEvent');
 }
 
 

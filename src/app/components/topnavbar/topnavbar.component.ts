@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Map } from 'immutable';
 import { Hoverfly } from '../../shared/models/hoverfly.model';
 import { API_ERRORS } from '../../shared/http/error-handling';
-import { NotificationService } from '../notifications/notification.service';
+import { EVENT_TYPE, NotificationService } from '../notifications/notification.service';
 
 @Component({
   selector: 'app-topnavbar',
@@ -23,27 +23,34 @@ export class TopNavBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('subscribe error')
-
-    // TODO: not being trigger again after navigate from login to logout page
     this.notifyService.errors
       .filter(error => error === API_ERRORS.UNAUTHORIZED)
       .subscribe(() => {
-        console.log('error on logout')
         this.logout()
         }
       );
 
+    this.notifyService.events
+      .subscribe(event => {
+        if (event === EVENT_TYPE.LOGIN) {
+          this.showLogoutLink = true;
+        } else if (event === EVENT_TYPE.LOGOUT) {
+          this.showLogoutLink = false;
+        }
+      });
+
+    // TODO resolve version before view init
     this.hoverfly$
       .map((hoverfly: Map<any, any>) => hoverfly.toJS())
       .subscribe((hoverfly: Hoverfly) =>  {
         this.version = hoverfly.version || 'latest';
       });
+
+    this.showLogoutLink = this.authService.hasSession();
   }
 
   logout() {
     this.authService.logout();
-    this.showLogoutLink = false;
   }
 
 }
