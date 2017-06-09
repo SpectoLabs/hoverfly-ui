@@ -16,7 +16,6 @@ export class TopNavBarComponent implements OnInit {
 
   @select([ 'hoverfly', 'hoverfly' ]) hoverfly$: Observable<any>;
   public version = 'latest';
-  // TODO: there is no API endpoint to check if hoverfly has auth enabled or not
   public showLogoutLink: boolean;
 
   constructor(private authService: AuthService, private notifyService: NotificationService ) {
