@@ -39,7 +39,7 @@ describe('Service: Hoverfly', () => {
     ]);
 
     service = injector.get(HoverflyService);
-    notifyService = injector.get(NotificationService) as MockNotificationService;
+    notifyService = <any> injector.get(NotificationService);
     backend = injector.get(ConnectionBackend) as MockBackend;
     backend.connections.subscribe(connection => lastConnection = connection);
 
