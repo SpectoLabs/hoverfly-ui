@@ -7,11 +7,10 @@ describe('hoverfly-ui App', () => {
     page = new HoverflyUiPage();
   });
 
-  // TODO: Add some e2e tests
-  // it('should display welcome message', done => {
-  //   page.navigateTo();
-  //   page.getParagraphText()
-  //     .then(msg => expect(msg).toEqual('Welcome to app!!'))
-  //     .then(done, done.fail);
-  // });
+  it('should show hoverfly info', done => {
+    page.navigateTo();
+    page.getHoverflyInfoMode()
+      .then(msg => expect(msg).toEqual('simulate'))
+      .then(done, done.fail);
+  });
 });

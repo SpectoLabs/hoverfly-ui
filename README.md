@@ -33,5 +33,5 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+It will serve the app and use hoverfly to simulate backend service (in this case it is hoverfly itself) before running the test, and stop them at the end. 

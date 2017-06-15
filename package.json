@@ -1,14 +1,16 @@
 {
   "name": "hoverfly-ui",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "Apache",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test --watch false",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "pree2e": "./e2e/test.setup.sh",
+    "e2e": "ng e2e -p 4200 || :",
+    "poste2e": "./e2e/test.teardown.sh"
   },
   "private": true,
   "dependencies": {

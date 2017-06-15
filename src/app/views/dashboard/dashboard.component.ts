@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HoverflyService } from '../../shared/services/hoverfly.service';
 import { Hoverfly } from '../../shared/models/hoverfly.model';
@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public hoverfly: Hoverfly;
   public pollingSubscription: Subscription;
 
-  constructor(private service: HoverflyService, private notiffyService: NotificationService) {}
+  constructor(private service: HoverflyService, private notiffyService: NotificationService, private ngZone: NgZone) {}
 
   ngOnInit(): void {
     this.hoverfly$.subscribe((hoverfly: Map<any, any>) => {
@@ -31,7 +31,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     this.service.getVersion();
-    this.pollingSubscription = this.service.pollHoverfly();
+    this.ngZone.runOutsideAngular(() => this.pollingSubscription = this.service.pollHoverfly());
+
 
     this.notiffyService.errors
       .filter(error => error === API_ERRORS.SERVICE_UNAVAILABLE)

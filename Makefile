@@ -4,6 +4,7 @@ run:
 
 test:
 	npm test
+	npm run e2e
 
 build:
 	ng build --prod --aot

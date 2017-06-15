@@ -2,10 +2,12 @@ import { browser, by, element } from 'protractor';
 
 export class HoverflyUiPage {
   navigateTo() {
-    return browser.get('/');
+    return browser.get('/dashboard');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getHoverflyInfoMode() {
+    // browser.pause();
+    return element(by.css('#hoverfly-info-mode span')).getText();
   }
+
 }
