@@ -35,3 +35,9 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
+
+## License
+
+Apache License version 2.0 [See LICENSE for details](https://github.com/SpectoLabs/hoverfly-ui/blob/master/LICENSE).
+
+(c) [SpectoLabs](https://specto.io) 2017.
