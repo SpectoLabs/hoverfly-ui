@@ -18,8 +18,7 @@ dependencies:
 
 test:
   override:
-    - export TERM="dumb"
-    - "make test"
+    - export TERM="dumb" && make test
 
 deployment:
   release:
