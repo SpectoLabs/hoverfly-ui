@@ -13,11 +13,12 @@ dependencies:
     - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
     - sudo apt-get update
     - sudo apt-get install google-chrome-stable
-    - curl https://raw.githubusercontent.com/SpectoLabs/hoverfly/hoverfly-install-script-linux/scripts/get_hoverfly_for_linux.sh > get_hoverfly.sh
+    - curl https://raw.githubusercontent.com/SpectoLabs/hoverfly/master/scripts/get_hoverfly_for_linux.sh > get_hoverfly.sh
     - chmod 700 get_hoverfly.sh && ./get_hoverfly.sh
 
 test:
   override:
+    - export TERM="dumb"
     - "make test"
 
 deployment:
