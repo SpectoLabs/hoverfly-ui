@@ -67,6 +67,7 @@ pre, code {
     font-size: 14px;
     height: auto;
     padding: 10px 12px;
+    width: 100px;
 }
 
 .table-responsive {

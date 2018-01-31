@@ -129,8 +129,9 @@ describe('Component: Dashboard', () => {
           counters: {
             capture: 100,
             simulate: 200,
-            modify: 300,
-            synthesize: 400
+            spy: 300,
+            modify: 400,
+            synthesize: 500
           }
         }
     });
@@ -145,6 +146,7 @@ describe('Component: Dashboard', () => {
       expect(counters.children[1].nativeElement.textContent).toBe('200');
       expect(counters.children[2].nativeElement.textContent).toBe('300');
       expect(counters.children[3].nativeElement.textContent).toBe('400');
+      expect(counters.children[4].nativeElement.textContent).toBe('500');
     });
   }));
 

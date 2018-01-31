@@ -5,6 +5,7 @@ export interface Usage {
 
 export interface ModeCounter {
   simulate: number;
+  spy: number;
   capture: number;
   modify: number;
   synthesize: number;
