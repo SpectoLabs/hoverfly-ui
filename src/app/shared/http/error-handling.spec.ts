@@ -1,9 +1,8 @@
 
 import { API_ERRORS, notifyError } from './error-handling';
-import { mockErrorResponse } from '../testing/http-helper';
 import { NotificationService } from '../../components/notifications/notification.service';
-import createSpy = jasmine.createSpy;
 import { MockNotificationService } from '../testing/mock-helper.spec';
+import { mockErrorResponse } from '../testing/http-helper.spec';
 describe('Http error handler', () => {
   let service: NotificationService;
 

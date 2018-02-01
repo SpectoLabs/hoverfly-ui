@@ -6,12 +6,11 @@ import { DashboardModule } from './dashboard.module';
 import createSpy = jasmine.createSpy;
 import { HoverflyService } from '../../shared/services/hoverfly.service';
 import { NgRedux } from '@angular-redux/store';
-import { createMockRedux } from '../../shared/testing/redux-helper';
 import { fromJS } from 'immutable';
 import { Subscription } from 'rxjs/Subscription';
 import { By } from '@angular/platform-browser';
-import { MockNgRedux } from '@angular-redux/store/lib/testing';
-import { click } from '../../shared/testing/click-helper';
+import { createMockRedux } from '../../shared/testing/redux-helper.spec';
+import { click } from '../../shared/testing/click-helper.spec';
 
 
 const mockState: Map<any, any> = fromJS(
@@ -51,7 +50,6 @@ describe('Component: Dashboard', () => {
   beforeEach(async(() => configureTestModule(mockState)));
 
   beforeEach(() => {
-    MockNgRedux.reset();  // This seem to be required to use our mock state
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     hoverflyService = TestBed.get(HoverflyService);
@@ -89,7 +87,6 @@ describe('Component: Dashboard', () => {
     });
 
     configureTestModule(stateWithMiddleware).then(() => {
-      MockNgRedux.reset();
       fixture = TestBed.createComponent(DashboardComponent);
 
       const binaryField = fixture.debugElement.query(By.css('#hoverfly-middleware-details-binary code'));
@@ -137,7 +134,6 @@ describe('Component: Dashboard', () => {
     });
 
     configureTestModule(stateWithMiddleware).then(() => {
-      MockNgRedux.reset();
       fixture = TestBed.createComponent(DashboardComponent);
 
       const counters = fixture.debugElement.query(By.css('#hoverfly-counters'));

@@ -5,10 +5,6 @@ import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed
 import { LoginModule } from './login.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../../shared/services/auth.service';
-import createSpy = jasmine.createSpy;
-import { By } from '@angular/platform-browser';
-import { click } from '../../shared/testing/click-helper';
-import { NgModel } from '@angular/forms';
 import { AlertModule } from 'ngx-bootstrap';
 import { MockAuthService } from '../../shared/testing/mock-helper.spec';
 

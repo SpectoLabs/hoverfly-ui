@@ -5,15 +5,11 @@ import {
   BaseRequestOptions, ConnectionBackend, Http, RequestOptions, ResponseOptions, Response,
   RequestMethod
 } from '@angular/http';
-import createSpy = jasmine.createSpy;
 import { Router } from '@angular/router';
-import { NgRedux } from '@angular-redux/store';
-import { AppState } from 'app/app.state';
-import { mockErrorResponse } from '../testing/http-helper';
-import { HOVERFLY_ACTIONS } from './hoverfly.service';
 import { API_ERRORS } from '../http/error-handling';
 import { MockNotificationService, MockRouter } from '../testing/mock-helper.spec';
 import { NotificationService } from '../../components/notifications/notification.service';
+import { mockErrorResponse } from '../testing/http-helper.spec';
 
 describe('Service: Auth', () => {
 

@@ -12,10 +12,10 @@ import {
 import { HOVERFLY_ACTIONS, HoverflyService } from './hoverfly.service';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
-import { mockErrorResponse } from '../testing/http-helper';
 import { API_ERRORS } from '../http/error-handling';
 import { NotificationService } from '../../components/notifications/notification.service';
 import { MockNotificationService } from '../testing/mock-helper.spec';
+import { mockErrorResponse } from '../testing/http-helper.spec';
 
 describe('Service: Hoverfly', () => {
 
