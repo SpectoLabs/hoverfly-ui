@@ -18,21 +18,6 @@ export class HoverflyService {
   constructor(private http: Http, private ngRedux: NgRedux<AppState>, private notifyService: NotificationService) {
   }
 
-  getVersion(): void {
-    this.http.get('/api/v2/hoverfly/version')
-      .map(res => res.json())
-      .subscribe(
-        this.updateHoverfly(),
-        httpErrorHandler(this.notifyService));
-  }
-
-  getMode(): void {
-    this.http.get('/api/v2/hoverfly/mode')
-      .map(res => res.json())
-      .subscribe(
-        this.updateHoverfly(),
-        httpErrorHandler(this.notifyService));
-  }
 
   setMode(modeSelection): void {
     this.http.put('/api/v2/hoverfly/mode', JSON.stringify({ mode: modeSelection }))
@@ -42,8 +27,8 @@ export class HoverflyService {
         httpErrorHandler(this.notifyService));
   }
 
-  getDestination(): void {
-    this.http.get('/api/v2/hoverfly/destination')
+  getHoverflyInfo(): void {
+    this.http.get('/api/v2/hoverfly')
       .map(res => res.json())
       .subscribe(
         this.updateHoverfly(),
@@ -60,22 +45,13 @@ export class HoverflyService {
         httpErrorHandler(this.notifyService));
   }
 
-  getUsage(): void {
-      this.http.get('/api/v2/hoverfly/usage')
-        .map(res => res.json())
-        .subscribe(
-          this.updateHoverfly(),
-          httpErrorHandler(this.notifyService));
-  }
 
   pollHoverfly(): Subscription {
 
     return Observable.timer(0, 5000)
       .subscribe(() => {
-        this.getMode();
-        this.getDestination();
+        this.getHoverflyInfo();
         this.getMiddleware();
-        this.getUsage();
       });
 
   }

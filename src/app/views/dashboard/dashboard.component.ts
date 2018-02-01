@@ -30,7 +30,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.hoverfly = hoverfly.toJS();
     });
 
-    this.service.getVersion();
     this.pollingSubscription = this.service.pollHoverfly();
 
     this.notiffyService.errors

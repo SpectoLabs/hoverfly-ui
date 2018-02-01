@@ -45,42 +45,48 @@ describe('Service: Hoverfly', () => {
 
   });
 
-  it('getVersion should dispatch an update action', () => {
+  it('getHoverflyInfo should dispatch an update action', () => {
 
-    service.getVersion();
+    const hoverflyInfo = {
+      destination: 'hoverfly.io',
+      mode: 'simulate',
+      usage: {
+        counters: {
+          capture: 0,
+          modify: 0,
+          simulate: 0,
+          spy: 0,
+          synthesize: 0
+        }
+      },
+      version: 'v0.15.0',
+    };
+
+    service.getHoverflyInfo();
     lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { version: 'v0.11.4' },
+      body: hoverflyInfo,
       status: 200
     })));
 
     expect(lastConnection).toBeDefined();
-    expect(lastConnection.request.url).toBe('/api/v2/hoverfly/version');
+    expect(lastConnection.request.url).toBe('/api/v2/hoverfly');
     expect(lastConnection.request.method).toBe(RequestMethod.Get);
 
     expect(ngRedux.dispatch).toHaveBeenCalledWith({
       type: HOVERFLY_ACTIONS.UPDATE,
-      payload: { version: 'v0.11.4' }
+      payload: hoverflyInfo
     });
 
   });
 
-  it('getMode should dispatch an update action', () => {
+  it('getHoverflyInfo failed should dispatch an error notification action', () => {
 
-    service.getMode();
-    lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { mode: 'capture' },
-      status: 200
-    })));
+    service.getHoverflyInfo();
+    lastConnection.mockError(mockErrorResponse(0));
 
     expect(lastConnection).toBeDefined();
-    expect(lastConnection.request.url).toBe('/api/v2/hoverfly/mode');
-    expect(lastConnection.request.method).toBe(RequestMethod.Get);
 
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.UPDATE,
-      payload: { mode: 'capture' }
-    });
-
+    expect(notifyService.sendError).toHaveBeenCalledWith(API_ERRORS.SERVICE_UNAVAILABLE);
   });
 
   it('setMode should send hoverfly mode', () => {
@@ -103,34 +109,6 @@ describe('Service: Hoverfly', () => {
 
   });
 
-  it('getDestination should dispatch an update action', () => {
-
-    service.getDestination();
-    lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: { destination: 'destination.com' },
-      status: 200
-    })));
-
-    expect(lastConnection).toBeDefined();
-    expect(lastConnection.request.url).toBe('/api/v2/hoverfly/destination');
-    expect(lastConnection.request.method).toBe(RequestMethod.Get);
-
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.UPDATE,
-      payload: { destination: 'destination.com' }
-    });
-
-  });
-
-  it('getDestination failed should dispatch an error notification action', () => {
-
-    service.getDestination();
-    lastConnection.mockError(mockErrorResponse(0));
-
-    expect(lastConnection).toBeDefined();
-
-    expect(notifyService.sendError).toHaveBeenCalledWith(API_ERRORS.SERVICE_UNAVAILABLE);
-  });
 
   it('getMiddleware should dispatch an update action', () => {
 
@@ -172,35 +150,6 @@ describe('Service: Hoverfly', () => {
 
     expect(ngRedux.dispatch).not.toHaveBeenCalled();
 
-  });
-
-  it('getUsage should dispatch an update action', () => {
-
-    const usageData = {
-      usage: {
-        counters: {
-          capture: 1,
-          modify: 2,
-          simulate: 3,
-          synthesize: 4
-        }
-      }
-    };
-
-    service.getUsage();
-
-    lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: usageData,
-      status: 200
-    })));
-    expect(lastConnection).toBeDefined();
-    expect(lastConnection.request.url).toBe('/api/v2/hoverfly/usage');
-    expect(lastConnection.request.method).toBe(RequestMethod.Get);
-
-    expect(ngRedux.dispatch).toHaveBeenCalledWith({
-      type: HOVERFLY_ACTIONS.UPDATE,
-      payload: usageData
-    });
   });
 
 });

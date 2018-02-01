@@ -10,12 +10,3 @@ export interface Hoverfly {
   middleware: Middleware;
   usage: Usage;
 }
-
-export class NullHoverfly implements Hoverfly {
-  version = '';
-  mode = '';
-  destination = '';
-  middleware = {} as Middleware;
-  usage = {} as Usage;
-
-}
