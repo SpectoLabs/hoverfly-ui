@@ -1,7 +1,7 @@
 
 
 import { hoverflyReducer } from './hoverfly.reducer';
-import { fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { HOVERFLY_ACTIONS } from '../services/hoverfly.service';
 
 const INITIAL_STATE: Map<any, any> = fromJS({
