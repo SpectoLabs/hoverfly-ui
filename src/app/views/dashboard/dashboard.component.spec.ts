@@ -127,8 +127,9 @@ describe('Component: Dashboard', () => {
             capture: 100,
             simulate: 200,
             spy: 300,
-            modify: 400,
-            synthesize: 500
+            diff: 400,
+            modify: 500,
+            synthesize: 600
           }
         }
     });
@@ -143,6 +144,7 @@ describe('Component: Dashboard', () => {
       expect(counters.children[2].nativeElement.textContent).toBe('300');
       expect(counters.children[3].nativeElement.textContent).toBe('400');
       expect(counters.children[4].nativeElement.textContent).toBe('500');
+      expect(counters.children[5].nativeElement.textContent).toBe('600');
     });
   }));
 

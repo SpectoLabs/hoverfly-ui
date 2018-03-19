@@ -53,6 +53,7 @@ describe('Service: Hoverfly', () => {
       usage: {
         counters: {
           capture: 0,
+          diff: 0,
           modify: 0,
           simulate: 0,
           spy: 0,

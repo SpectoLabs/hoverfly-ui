@@ -36,6 +36,7 @@
           <a (click)="setMode($event)" name="capture" [class.btn-primary]="hoverfly.mode === 'capture'" class="btn btn-xs btn-default btn-mode">Capture</a>
           <a (click)="setMode($event)" name="simulate"  [class.btn-primary]="hoverfly.mode ==='simulate'" class="btn btn-default btn-xs btn-mode">Simulate</a>
           <a (click)="setMode($event)" name="spy"  [class.btn-primary]="hoverfly.mode ==='spy'" class="btn btn-default btn-xs btn-mode">Spy</a>
+          <a (click)="setMode($event)" name="diff"  [class.btn-primary]="hoverfly.mode ==='diff'" class="btn btn-default btn-xs btn-mode">Diff</a>
           <a (click)="setMode($event)" name="modify" [class.btn-primary]="hoverfly.mode ==='modify'" class="btn btn-default btn-xs btn-mode">Modify</a>
           <a (click)="setMode($event)" name="synthesize" [class.btn-primary]="hoverfly.mode ==='synthesize'" class="btn btn-default btn-xs btn-mode">Synthesize</a>
         </div>
@@ -52,6 +53,7 @@
               <th>Captured</th>
               <th>Simulated</th>
               <th>Spied</th>
+              <th>Diffed</th>
               <th>Modified</th>
               <th>Synthesized</th>
             </tr>
@@ -59,6 +61,7 @@
               <td><span class="label label-default">{{ hoverfly?.usage?.counters?.capture || 0 }}</span></td>
               <td><span class="label label-default">{{ hoverfly?.usage?.counters?.simulate || 0 }}</span></td>
               <td><span class="label label-default">{{ hoverfly?.usage?.counters?.spy || 0 }}</span></td>
+              <td><span class="label label-default">{{ hoverfly?.usage?.counters?.diff || 0 }}</span></td>
               <td><span class="label label-default">{{ hoverfly?.usage?.counters?.modify || 0 }}</span></td>
               <td><span class="label label-default">{{ hoverfly?.usage?.counters?.synthesize || 0 }}</span></td>
             </tr>
