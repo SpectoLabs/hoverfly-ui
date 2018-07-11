@@ -1,0 +1,54 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11.2-browsers
+    working_directory: ~/hoverfly-ui
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run: npm version
+      - run: npm install --quiet
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules/
+      - run: make test
+      - persist_to_workspace:
+          root: /home/circleci/hoverfly-ui
+          paths:
+            - node_modules/
+
+  release:
+    docker:
+      - image: circleci/node:8.9-browsers
+    working_directory: ~/hoverfly-ui
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /home/circleci/hoverfly-ui
+      - run:
+          name: Build and package
+          command: |
+            make build
+            mv dist.zip $CIRCLE_TAG.zip
+      - run:
+          name: Run Github release
+          command: |
+            go get github.com/aktau/github-release
+            github-release upload  --user SpectoLabs --repo hoverfly-ui --tag $CIRCLE_TAG --name $CIRCLE_TAG.zip --file $CIRCLE_TAG.zip
+
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - release:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
