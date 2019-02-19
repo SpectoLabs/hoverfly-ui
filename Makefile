@@ -6,5 +6,5 @@ test:
 	npm test
 
 build:
-	ng build --prod --aot
+	npm run build
 	zip -j dist.zip dist/*
