@@ -5,12 +5,11 @@ import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed
 import { DashboardModule } from './dashboard.module';
 import createSpy = jasmine.createSpy;
 import { HoverflyService } from '../../shared/services/hoverfly.service';
-import { NgRedux } from '@angular-redux/store';
 import { fromJS } from 'immutable';
 import { Subscription } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { createMockRedux } from '../../shared/testing/redux-helper.spec';
 import { click } from '../../shared/testing/click-helper.spec';
+import { MockNgRedux, NgReduxTestingModule } from '@angular-redux/store/testing';
 
 
 const mockState: Map<any, any> = fromJS(
@@ -33,13 +32,13 @@ describe('Component: Dashboard', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 
-  const configureTestModule = function (state: Map<any, any>) {
+  const configureTestModule = function () {
     return TestBed.configureTestingModule({
       imports: [
-        DashboardModule
+        DashboardModule,
+        NgReduxTestingModule
       ],
       providers: [
-        { provide: NgRedux, useValue: createMockRedux(state) },
         { provide: HoverflyService, useClass: MockHoverflyService },
         { provide: ComponentFixtureAutoDetect, useValue: true }
       ]
@@ -47,12 +46,16 @@ describe('Component: Dashboard', () => {
       .compileComponents();
   };
 
-  beforeEach(async(() => configureTestModule(mockState)));
+  beforeEach(async(() => configureTestModule()));
 
   beforeEach(() => {
+    const hoverflyStub = MockNgRedux.getSelectorStub([ 'hoverfly', 'hoverfly' ]);
+    hoverflyStub.next(mockState);
+    hoverflyStub.complete();
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     hoverflyService = TestBed.get(HoverflyService);
+    MockNgRedux.reset();
   });
 
   it('should create the dashboard', () => {
@@ -86,7 +89,10 @@ describe('Component: Dashboard', () => {
         }
     });
 
-    configureTestModule(stateWithMiddleware).then(() => {
+    configureTestModule().then(() => {
+      const hoverflyStub = MockNgRedux.getSelectorStub([ 'hoverfly', 'hoverfly' ]);
+      hoverflyStub.next(stateWithMiddleware);
+      hoverflyStub.complete();
       fixture = TestBed.createComponent(DashboardComponent);
 
       const binaryField = fixture.debugElement.query(By.css('#hoverfly-middleware-details-binary code'));
@@ -134,7 +140,10 @@ describe('Component: Dashboard', () => {
         }
     });
 
-    configureTestModule(stateWithMiddleware).then(() => {
+    configureTestModule().then(() => {
+      const hoverflyStub = MockNgRedux.getSelectorStub([ 'hoverfly', 'hoverfly' ]);
+      hoverflyStub.next(stateWithMiddleware);
+      hoverflyStub.complete();
       fixture = TestBed.createComponent(DashboardComponent);
 
       const counters = fixture.debugElement.query(By.css('#hoverfly-counters'));

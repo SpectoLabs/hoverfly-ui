@@ -16,6 +16,7 @@ import { API_ERRORS } from '../http/error-handling';
 import { NotificationService } from '../../components/notifications/notification.service';
 import { MockNotificationService } from '../testing/mock-helper.spec';
 import { mockErrorResponse } from '../testing/http-helper.spec';
+import { MockNgRedux } from '@angular-redux/store/testing';
 
 describe('Service: Hoverfly', () => {
 
@@ -27,7 +28,7 @@ describe('Service: Hoverfly', () => {
   let notifyService: MockNotificationService;
 
   beforeEach(() => {
-    ngRedux = new NgRedux<AppState>(null);
+    ngRedux = MockNgRedux.getInstance();
     spyOn(ngRedux, 'dispatch');
     injector = ReflectiveInjector.resolveAndCreate([
       { provide: NgRedux, useValue: ngRedux },
