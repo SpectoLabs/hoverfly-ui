@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Map } from 'immutable';
 import { Hoverfly } from '../../shared/models/hoverfly.model';
 import { API_ERRORS } from '../../shared/http/error-handling';

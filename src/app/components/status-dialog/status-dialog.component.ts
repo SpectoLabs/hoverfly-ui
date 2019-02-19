@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { API_ERRORS } from '../../shared/http/error-handling';
 import { StatusDialogService } from './status-dialog.service';
 import { NotificationService } from '../notifications/notification.service';

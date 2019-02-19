@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import { httpErrorHandler, notifyError } from '../http/error-handling';
 import { EVENT_TYPE, NotificationService } from '../../components/notifications/notification.service';

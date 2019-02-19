@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable ,  Subscription } from 'rxjs';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../app.state';
-import { Subscription } from 'rxjs/Subscription';
 import { Middleware } from '../models/middlware.model';
 import { API_ERRORS, httpErrorHandler } from '../http/error-handling';
 import { NotificationService } from '../../components/notifications/notification.service';

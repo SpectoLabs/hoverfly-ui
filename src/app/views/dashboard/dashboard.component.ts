@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  Subscription } from 'rxjs';
 import { HoverflyService } from '../../shared/services/hoverfly.service';
 import { Hoverfly } from '../../shared/models/hoverfly.model';
 import { select } from '@angular-redux/store';
 import { Map } from 'immutable';
-import { Subscription } from 'rxjs/Subscription';
 import { API_ERRORS } from '../../shared/http/error-handling';
 import { NotificationService } from '../../components/notifications/notification.service';
 
