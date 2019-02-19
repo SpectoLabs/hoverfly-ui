@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import { httpErrorHandler, notifyError } from '../http/error-handling';
 import { EVENT_TYPE, NotificationService } from '../../components/notifications/notification.service';
+import { catchError, map } from 'rxjs/operators';
 
 export const SESSION_API_TOKEN = 'api-token';
 
@@ -18,11 +19,12 @@ export class AuthService {
   checkAuthenticated(): Observable<boolean> {
 
     return this.http.get('/api/v2/hoverfly/version')
-      .map((res: Response) => res.status === 200)
-      .catch(err => {
-        notifyError(err, this.notifyService);
-        return Observable.of(false);
-      });
+      .pipe(map((res: Response) => res.status === 200),
+        catchError(err => {
+          notifyError(err, this.notifyService);
+          return of(false);
+        })
+      );
   }
 
   login(username, password): void {
@@ -30,7 +32,7 @@ export class AuthService {
       username: username,
       password: password
     })
-      .map((res: Response) => res.json().token)
+      .pipe(map((res: Response) => res.json().token))
       .subscribe(token => {
           sessionStorage.setItem(SESSION_API_TOKEN, token);
           this.notifyService.sendEvent(EVENT_TYPE.LOGIN);

@@ -2,7 +2,7 @@
 import { Injector, ReflectiveInjector } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { StatusDialogService } from './status-dialog.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { MockAuthService, MockRouter } from '../../shared/testing/mock-helper.spec';
@@ -27,7 +27,7 @@ describe('Service: StatusDialog', () => {
   });
 
   it('should reload page if Hoverfly is running again', () => {
-    authService.checkAuthenticated.and.returnValue(Observable.of(true));
+    authService.checkAuthenticated.and.returnValue(of(true));
 
     service.retry();
 
@@ -36,7 +36,7 @@ describe('Service: StatusDialog', () => {
 
   it('should do nothing if Hoverfly is down', () => {
 
-    authService.checkAuthenticated.and.returnValue(Observable.of(false));
+    authService.checkAuthenticated.and.returnValue(of(false));
 
     service.retry();
 
@@ -45,7 +45,7 @@ describe('Service: StatusDialog', () => {
 
   it('should navigate to dashboard from login page when Hoverfly is running again', fakeAsync(() => {
 
-    authService.checkAuthenticated.and.returnValue(Observable.of(true));
+    authService.checkAuthenticated.and.returnValue(of(true));
     // Mocking router url
     router.setUrl('/login');
     router.navigateByUrl.and.returnValue(Promise.resolve(true));

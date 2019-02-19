@@ -6,6 +6,7 @@ import { select } from '@angular-redux/store';
 import { Map } from 'immutable';
 import { API_ERRORS } from '../../shared/http/error-handling';
 import { NotificationService } from '../../components/notifications/notification.service';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.pollingSubscription = this.service.pollHoverfly();
 
     this.notiffyService.errors
-      .filter(error => error === API_ERRORS.SERVICE_UNAVAILABLE)
+      .pipe(filter(error => error === API_ERRORS.SERVICE_UNAVAILABLE))
       .subscribe(() => this.pollingSubscription.unsubscribe());
   }
 

@@ -6,6 +6,7 @@ import { Map } from 'immutable';
 import { Hoverfly } from '../../shared/models/hoverfly.model';
 import { API_ERRORS } from '../../shared/http/error-handling';
 import { EVENT_TYPE, NotificationService } from '../notifications/notification.service';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-topnavbar',
@@ -23,7 +24,7 @@ export class TopNavBarComponent implements OnInit {
 
   ngOnInit() {
     this.notifyService.errors
-      .filter(error => error === API_ERRORS.UNAUTHORIZED)
+      .pipe(filter(error => error === API_ERRORS.UNAUTHORIZED))
       .subscribe(() => {
         this.logout()
         }
@@ -40,7 +41,7 @@ export class TopNavBarComponent implements OnInit {
 
     // TODO resolve version before view init
     this.hoverfly$
-      .map((hoverfly: Map<any, any>) => hoverfly.toJS())
+      .pipe(map((hoverfly: Map<any, any>) => hoverfly.toJS()))
       .subscribe((hoverfly: Hoverfly) =>  {
         this.version = hoverfly.version || 'latest';
       });

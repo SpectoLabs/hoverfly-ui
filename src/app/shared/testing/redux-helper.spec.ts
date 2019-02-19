@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { NgRedux } from '@angular-redux/store';
 
 export class MockRedux extends NgRedux<any> {

@@ -7,7 +7,7 @@ import createSpy = jasmine.createSpy;
 import { HoverflyService } from '../../shared/services/hoverfly.service';
 import { NgRedux } from '@angular-redux/store';
 import { fromJS } from 'immutable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { createMockRedux } from '../../shared/testing/redux-helper.spec';
 import { click } from '../../shared/testing/click-helper.spec';
