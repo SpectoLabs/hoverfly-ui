@@ -43,7 +43,7 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  pipeline:
     jobs:
       - build
       - release:
@@ -51,6 +51,6 @@ workflows:
             - build
           filters:
             tags:
-              only: /.*/
+              only: /^v[0-9]+(\.[0-9]+)*(-rc\.[0-9]+)?$/
             branches:
               ignore: /.*/
